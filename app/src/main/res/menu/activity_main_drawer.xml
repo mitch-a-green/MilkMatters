@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_donation_tracking"
+            android:title="Donation Tracking" />
+        <item
+            android:id="@+id/nav_depot_locator"
+            android:title="Depot Locator" />
+        <item
+            android:id="@+id/nav_education"
+            android:title="Education" />
+        <item
+            android:id="@+id/nav_news_feed"
+            android:title="News Feed" />
+    </group>
+
+    <item android:title="Milk Matters">
+        <menu>
+            <item
+                android:id="@+id/nav_about"
+                android:title="About" />
+            <item
+                android:id="@+id/nav_become_a_donor"
+                android:title="Become a Donor" />
+        </menu>
+    </item>
+
+</menu>
