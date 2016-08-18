@@ -6,6 +6,12 @@
 
     <string name="action_settings">Settings</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="education_fragment">Education</string>
+    <string name="donation_tracking_fragment">Donation Tracking</string>
+    <string name="depot_locator_fragment">Depot Locator</string>
+    <string name="home_fragment">Home</string>
+    <string name="about_fragment">About</string>
+    <string name="become_donor_fragment">Become A Donor</string>
+    <string name="news_feed_fragment">Become A Donor</string>
 </resources>

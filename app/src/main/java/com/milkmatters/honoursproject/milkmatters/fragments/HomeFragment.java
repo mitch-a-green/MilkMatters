@@ -1,6 +1,7 @@
 package com.milkmatters.honoursproject.milkmatters.fragments;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +42,26 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        showFAB();
+
         return view;
     }
 
+    /**
+     * Method to show the floating action button
+     */
+    public void showFAB()
+    {
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.show();
+    }
+
+    /**
+     * Method to hide the floating action button
+     */
+    public void hideFAB()
+    {
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.hide();
+    }
 }

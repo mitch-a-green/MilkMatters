@@ -17,7 +17,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.milkmatters.honoursproject.milkmatters.R;
+import com.milkmatters.honoursproject.milkmatters.fragments.AboutFragment;
+import com.milkmatters.honoursproject.milkmatters.fragments.BecomeDonorFragment;
+import com.milkmatters.honoursproject.milkmatters.fragments.DepotLocatorFragment;
+import com.milkmatters.honoursproject.milkmatters.fragments.DonationTrackingFragment;
+import com.milkmatters.honoursproject.milkmatters.fragments.EducationFragment;
 import com.milkmatters.honoursproject.milkmatters.fragments.HomeFragment;
+import com.milkmatters.honoursproject.milkmatters.fragments.NewsFeedFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -29,6 +35,10 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        fragment = null;
+        fragment = new HomeFragment();
+        switchFragment(getString(R.string.app_name));
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -93,21 +103,35 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             fragment = new HomeFragment();
             title = getString(R.string.app_name);
-
         } else if (id == R.id.nav_donation_tracking) {
-
+            fragment = new DonationTrackingFragment();
+            title = getString(R.string.donation_tracking_fragment);
         } else if (id == R.id.nav_depot_locator) {
-
+            fragment = new DepotLocatorFragment();
+            title = getString(R.string.depot_locator_fragment);
         } else if (id == R.id.nav_education) {
-
+            fragment = new EducationFragment();
+            title = getString(R.string.education_fragment);
         } else if (id == R.id.nav_news_feed) {
-
+            fragment = new NewsFeedFragment();
+            title = getString(R.string.news_feed_fragment);
         } else if (id == R.id.nav_about) {
-
+            fragment = new AboutFragment();
+            title = getString(R.string.about_fragment);
         } else if (id == R.id.nav_become_a_donor) {
-
+            fragment = new BecomeDonorFragment();
+            title = getString(R.string.become_donor_fragment);
         }
 
+        switchFragment(title);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    public void switchFragment(String title)
+    {
         if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -117,9 +141,24 @@ public class MainActivity extends AppCompatActivity
             // set the toolbar title
             getSupportActionBar().setTitle(title);
         }
+    }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+    /**
+     * Overridden onResume method
+     */
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        fragment.onResume();
+    }
+
+    /**
+     * Overridden onPause method
+     */
+    @Override
+    public void onPause()
+    {
+        super.onPause();
     }
 }
