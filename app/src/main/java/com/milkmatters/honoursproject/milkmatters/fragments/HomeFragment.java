@@ -52,7 +52,7 @@ public class HomeFragment extends Fragment {
      */
     public void showFAB()
     {
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) this.getActivity().findViewById(R.id.fab);
         fab.show();
     }
 
@@ -61,7 +61,7 @@ public class HomeFragment extends Fragment {
      */
     public void hideFAB()
     {
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) this.getActivity().findViewById(R.id.fab);
         fab.hide();
     }
 }
