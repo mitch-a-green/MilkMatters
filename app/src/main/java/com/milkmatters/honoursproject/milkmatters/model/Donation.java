@@ -6,16 +6,19 @@ package com.milkmatters.honoursproject.milkmatters.model;
  */
 public class Donation {
     private String date;
+    private int id;
     private int quantity;
 
     /**
      * Public constructor for the donation class
-     * * @param date the date on which the donation was made
+     * @param date the date on which the donation was made
+     * @param id the id of the donation (in the database)
      * @param quantity the quantity donated
      */
-    public Donation( String date, int quantity)
+    public Donation( String date, int id, int quantity)
     {
         this.date = date;
+        this.id = id;
         this.quantity = quantity;
     }
 
@@ -26,8 +29,9 @@ public class Donation {
      */
     public Donation(Donation donation)
     {
-        this.date = donation.date;
-        this.quantity = donation.quantity;
+        this.date = donation.getDate();
+        this.id = donation.getID();
+        this.quantity = donation.getQuantity();
     }
 
     /**
@@ -35,7 +39,7 @@ public class Donation {
      * @return the date
      */
     public String getDate() {
-        return date;
+        return this.date;
     }
 
     /**
@@ -47,11 +51,27 @@ public class Donation {
     }
 
     /**
+     * Get the id
+     * @return the id
+     */
+    public int getID() {
+        return this.id;
+    }
+
+    /**
+     * Set the id
+     * @param id the id
+     */
+    public void setID(int id) {
+        this.id = id;
+    }
+
+    /**
      * Get the quantity donated
      * @return the quantity donated
      */
     public int getQuantity() {
-        return quantity;
+        return this.quantity;
     }
 
     /**
