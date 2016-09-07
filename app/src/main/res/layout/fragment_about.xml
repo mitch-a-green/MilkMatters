@@ -86,8 +86,8 @@
 
                     <ImageView
                         android:id="@+id/about_mm_logo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="60dp"
+                        android:layout_height="1000dp"
                         android:src="@mipmap/mm_logo"
                         android:layout_alignParentLeft="true" />
 
