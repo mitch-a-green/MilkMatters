@@ -66,8 +66,18 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/about_mm_logo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/mm_logo"
+                    android:layout_alignParentLeft="true" />
+
                 <TextView
                     android:id="@+id/about_contact_heading"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/about_mm_logo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10sp"
@@ -76,13 +86,13 @@
                     android:textSize="16sp"
                     android:textColor="@color/colorPrimary"/>
 
-
                 <LinearLayout
                     android:id="@+id/contact_linear_layout"
                     android:layout_below="@+id/about_contact_heading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10sp"
+                    android:layout_toRightOf="@id/about_mm_logo"
                     android:orientation="vertical">
                     <TextView
                         android:layout_width="wrap_content"
@@ -103,13 +113,6 @@
                         android:layout_height="wrap_content"
                         android:text="@string/email_address" />
                 </LinearLayout>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_menu_send"
-                    android:layout_toLeftOf="@+id/contact_linear_layout"
-                    android:layout_alignTop="@id/contact_linear_layout"/>
 
                 <Button
                     android:id="@+id/email_us"
