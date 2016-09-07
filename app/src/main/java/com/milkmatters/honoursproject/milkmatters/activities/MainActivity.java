@@ -34,7 +34,7 @@ import com.milkmatters.honoursproject.milkmatters.model.Donation;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        LogDonationDialogFragment.LogDonationDialogCallbackInterface {
+        LogDonationDialogFragment.NoticeDialogListener {
     private Fragment fragment;
 
     @Override
@@ -181,7 +181,6 @@ public class MainActivity extends AppCompatActivity
         Bundle b = new Bundle();
         b.putString("title", "Log Donation");
         b.putString("hint", "Quantity (ml)");
-        b.putString("name", "");
         b.putString("positiveButton", "Log Donation");
         b.putString("negativeButton", "Cancel");
         newFragment.setArguments(b);
@@ -189,17 +188,35 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     * Log donation dialog callback interface
-     * @param date the date of the donation
-     * @param quantity the quantity donated
+     * Overridden onPositiveClick
+     * @param dialog the log donation dialog
      */
     @Override
-    public void logDonationDialogCallbackInterface(String date, String quantity)
-    {
+    public void onDialogPositiveClick(DialogFragment dialog) {
+
+    }
+
+    /**
+     * Overridden onNegativeClick
+     * @param dialog the log donation dialog
+     */
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+
+    }
+
+    /**
+     * Overridden onReturnValue method for the log donation dialog.
+     * Logs the donation in the donations table.
+     * @param quantity the quantity donated in ml
+     * @param date the date of the donation
+     */
+    @Override
+    public void onReturnValue(int quantity, String date) {
         // add the donation to the database
         DonationsTableHelper donationsTableHelper =
                 new DonationsTableHelper(this.getApplicationContext());
-        Donation donation = new Donation(String.valueOf(date), Integer.valueOf(quantity));
+        Donation donation = new Donation(date, quantity);
         donationsTableHelper.createDonation(donation);
         donationsTableHelper.closeDB();
 

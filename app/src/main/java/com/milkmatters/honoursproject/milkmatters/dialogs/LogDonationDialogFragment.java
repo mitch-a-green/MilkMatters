@@ -1,5 +1,6 @@
 package com.milkmatters.honoursproject.milkmatters.dialogs;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -21,6 +22,25 @@ import com.milkmatters.honoursproject.milkmatters.R;
  * Created by mitchell on 2016/08/19.
  */
 public class LogDonationDialogFragment extends DialogFragment {
+
+    // Use this instance of the interface to deliver action events
+    NoticeDialogListener mListener;
+
+    // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        // Verify that the host activity implements the callback interface
+        try {
+            // Instantiate the NoticeDialogListener so we can send events to the host
+            mListener = (NoticeDialogListener) activity;
+        } catch (ClassCastException e) {
+            // The activity doesn't implement the interface, throw exception
+            throw new ClassCastException(activity.toString()
+                    + " must implement NoticeDialogListener");
+        }
+    }
+
     /**
      * Overridden onCreate method
      * @param savedInstanceState the saved instance state
@@ -32,7 +52,6 @@ public class LogDonationDialogFragment extends DialogFragment {
         Bundle b = getArguments();
         final String title = b.getString("title"); // The title
         final String hint = b.getString("hint");
-        final String name = b.getString("name");
         final String positiveButton = b.getString("positiveButton"); // The positive button text
         final String negativeButton = b.getString("negativeButton"); // The negative button text
 
@@ -61,8 +80,7 @@ public class LogDonationDialogFragment extends DialogFragment {
                                 getDialog().findViewById(R.id.quantityEditText);
                         DatePicker datePicker = (DatePicker)
                                 getDialog().findViewById(R.id.datePicker);
-                        LogDonationDialogCallbackInterface callback =
-                                (LogDonationDialogCallbackInterface) getTargetFragment();
+                        NoticeDialogListener activity = (NoticeDialogListener) getActivity();
                         String date = datePicker.getDayOfMonth() + "-" + datePicker.getMonth()
                                 + "-" + datePicker.getYear();
                         String quantity = quantityEditText.getText().toString().trim();
@@ -72,7 +90,8 @@ public class LogDonationDialogFragment extends DialogFragment {
                         }
                         else
                         {
-                            callback.logDonationDialogCallbackInterface(date, quantity);
+                            activity.onReturnValue(Integer.valueOf(quantity), date);
+                            mListener.onDialogPositiveClick(LogDonationDialogFragment.this);
                         }
                     }
                 })
@@ -100,6 +119,6 @@ public class LogDonationDialogFragment extends DialogFragment {
 
         void onDialogNegativeClick(DialogFragment dialog);
 
-        void onReturnValue(int day);
+        void onReturnValue(int quantity, String date);
     }
 }
