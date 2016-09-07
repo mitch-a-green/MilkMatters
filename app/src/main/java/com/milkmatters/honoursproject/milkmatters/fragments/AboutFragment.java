@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.milkmatters.honoursproject.milkmatters.R;
 
@@ -70,6 +71,34 @@ public class AboutFragment extends Fragment {
             }
         });
 
+        TextView officeNumberTextView = (TextView) this.view.findViewById(R.id.office_number);
+        TextView cellNumberTextView = (TextView) this.view.findViewById(R.id.cell_number);
+        TextView emailAddressTextView = (TextView) this.view.findViewById(R.id.email_address);
+
+        // add on click functionality to automatically dial the Milk Matters office number
+        officeNumberTextView.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                callUs(getString(R.string.office));
+            }
+        });
+
+        // add on click functionality to automatically dial the Milk Matters cellphone number
+        cellNumberTextView.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                callUs(getString(R.string.cell));
+            }
+        });
+
+        // add functionality to send an automated email
+        emailAddressTextView.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String[] addresses = {"mitch.a.green@gmail.com", "chelseajoyful@gmail.com"};
+                String message = "Hi,\n\nI read about you in the Milk Matters app. I am " +
+                        "interested in finding out more...";
+                emailUs(addresses, "Want to Know More", message);
+            }
+        });
+
         return this.view;
     }
 
@@ -104,5 +133,17 @@ public class AboutFragment extends Fragment {
         emailIntent.putExtra(Intent.EXTRA_TEXT, message);
         if (emailIntent.resolveActivity(getActivity().getPackageManager()) != null)
             startActivity(emailIntent);
+    }
+
+    /**
+     * Method to dial a number that was clicked on
+     * @param number the number to dial
+     */
+    public void callUs(String number)
+    {
+        Intent intent = new Intent(Intent.ACTION_CALL);
+        intent.setData(Uri.parse("tel:" + number));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 }

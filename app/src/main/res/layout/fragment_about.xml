@@ -97,15 +97,24 @@
                             android:text="@string/telephone"
                             android:textColor="@color/colorLightPink"/>
                         <TextView
+                            android:id="@+id/office_number"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/telephone_office_cell" />
+                            android:text="@string/office_number"
+                            android:clickable="true"/>
+                        <TextView
+                            android:id="@+id/cell_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/cell_number"
+                            android:clickable="true" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/email"
                             android:textColor="@color/colorLightPink"/>
                         <TextView
+                            android:id="@+id/email_address"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/email_address" />
