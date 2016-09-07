@@ -12,6 +12,18 @@ public class Donation {
     /**
      * Public constructor for the donation class
      * @param date the date on which the donation was made
+     * @param quantity the quantity donated
+     */
+    public Donation( String date, int quantity)
+    {
+        this.date = date;
+        this.id = -1;
+        this.quantity = quantity;
+    }
+
+    /**
+     * Public constructor for the donation class
+     * @param date the date on which the donation was made
      * @param id the id of the donation (in the database)
      * @param quantity the quantity donated
      */

@@ -1,11 +1,14 @@
 package com.milkmatters.honoursproject.milkmatters.activities;
 
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,8 +18,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.milkmatters.honoursproject.milkmatters.R;
+import com.milkmatters.honoursproject.milkmatters.database.DonationsTableHelper;
+import com.milkmatters.honoursproject.milkmatters.dialogs.LogDonationDialogFragment;
 import com.milkmatters.honoursproject.milkmatters.fragments.AboutFragment;
 import com.milkmatters.honoursproject.milkmatters.fragments.BecomeDonorFragment;
 import com.milkmatters.honoursproject.milkmatters.fragments.DepotLocatorFragment;
@@ -24,9 +30,11 @@ import com.milkmatters.honoursproject.milkmatters.fragments.DonationTrackingFrag
 import com.milkmatters.honoursproject.milkmatters.fragments.EducationFragment;
 import com.milkmatters.honoursproject.milkmatters.fragments.HomeFragment;
 import com.milkmatters.honoursproject.milkmatters.fragments.NewsFeedFragment;
+import com.milkmatters.honoursproject.milkmatters.model.Donation;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        LogDonationDialogFragment.LogDonationDialogCallbackInterface {
     private Fragment fragment;
 
     @Override
@@ -44,8 +52,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                showLogDonationDialog();
             }
         });
 
@@ -84,9 +91,12 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_log_donation) {
+            showLogDonationDialog();
             return true;
         }
+        else if (id == R.id.action_settings)
+            return true;
 
         return super.onOptionsItemSelected(item);
     }
@@ -160,5 +170,45 @@ public class MainActivity extends AppCompatActivity
     public void onPause()
     {
         super.onPause();
+    }
+
+    /**
+     * Method to show the log donation dialog
+     */
+    public void showLogDonationDialog()
+    {
+        DialogFragment newFragment = new LogDonationDialogFragment(); // Create the dialog fragment
+        Bundle b = new Bundle();
+        b.putString("title", "Log Donation");
+        b.putString("hint", "Quantity (ml)");
+        b.putString("name", "");
+        b.putString("positiveButton", "Log Donation");
+        b.putString("negativeButton", "Cancel");
+        newFragment.setArguments(b);
+        newFragment.show(getSupportFragmentManager(), "confirmRename");
+    }
+
+    /**
+     * Log donation dialog callback interface
+     * @param date the date of the donation
+     * @param quantity the quantity donated
+     */
+    @Override
+    public void logDonationDialogCallbackInterface(String date, String quantity)
+    {
+        // add the donation to the database
+        DonationsTableHelper donationsTableHelper =
+                new DonationsTableHelper(this.getApplicationContext());
+        Donation donation = new Donation(String.valueOf(date), Integer.valueOf(quantity));
+        donationsTableHelper.createDonation(donation);
+        donationsTableHelper.closeDB();
+
+        // display a message
+        CoordinatorLayout coordinatorLayout = (CoordinatorLayout)
+                findViewById(R.id.coordinator_layout);
+        Snackbar.make(coordinatorLayout, "Logged your donation.", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+
+        this.onResume();
     }
 }
