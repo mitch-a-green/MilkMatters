@@ -1,5 +1,6 @@
 package com.milkmatters.honoursproject.milkmatters.activities;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -32,11 +33,21 @@ import com.milkmatters.honoursproject.milkmatters.fragments.HomeFragment;
 import com.milkmatters.honoursproject.milkmatters.fragments.NewsFeedFragment;
 import com.milkmatters.honoursproject.milkmatters.model.Donation;
 
+/**
+ * Main activity.
+ * Switches between various fragments, and controls the navigation drawer and
+ * overflow menu options.
+ */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        LogDonationDialogFragment.NoticeDialogListener {
+        LogDonationDialogFragment.NoticeDialogListener,
+        AboutFragment.OnFragmentInteractionListener {
     private Fragment fragment;
 
+    /**
+     * Overridden onCreate method
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +77,12 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    /**
+     * Overridden onBackPressed method.
+     * Closes the drawer if it is open.
+     * Otherwise, returns to the home screen.
+     * Closes the app if already on the home screen.
+     */
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -76,6 +93,11 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Overridden onCreateOptionsMenu method
+     * @param menu the menu
+     * @return a boolean
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -83,6 +105,12 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * Overridden onOptionsItemSelected method.
+     * Performs the appropriate action for each option in the overflow menu
+     * @param item the option item selected
+     * @return a boolean
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -101,6 +129,13 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Overridden onNavigationItemSelected method.
+     * Handles clicks on items in the navigation drawer.
+     * Switches between the fragments/activities selected.
+     * @param item the navigation item selected
+     * @return a boolean
+     */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -140,6 +175,10 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * A method to switch between fragments
+     * @param title the title of the fragment to switch to
+     */
     public void switchFragment(String title)
     {
         if (fragment != null) {
@@ -227,5 +266,18 @@ public class MainActivity extends AppCompatActivity
                 .setAction("Action", null).show();
 
         this.onResume();
+    }
+
+    /**
+     * Overridden onFragmentInteractionMethod
+     * Switches to the Become a Donor Fragment
+     * @param uri the URI
+     */
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+        fragment = null;
+        fragment = new BecomeDonorFragment();
+        String title = getString(R.string.become_donor_fragment);
+        this.switchFragment(title);
     }
 }
