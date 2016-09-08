@@ -11,12 +11,41 @@ import java.util.ArrayList;
 
 /**
  * Database helper class for the meters table
- * Created by mitchell on 2016/02/22.
  */
 public class DonationsTableHelper extends DatabaseHelper
 {
     /**
-     * Constructor for the DatabaseHelper class
+     * Get all donations that have been logged
+     *
+     * @return a list of donations
+     */
+    public ArrayList<Donation> getAllDonations() {
+        ArrayList<Donation> donations = new ArrayList<Donation>();
+
+        String selectQuery = "SELECT * FROM " + TABLE_DONATIONS + " ORDER BY " + KEY_DATE +
+                " DESC, " + KEY_ID + " DESC";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        // looping through all the rows and adding to the list
+        if (c.moveToFirst()) {
+            do {
+                int id = c.getInt(c.getColumnIndex(KEY_ID));
+                String dateAdded = c.getString(c.getColumnIndex(KEY_DATE));
+                int quantity = c.getInt(c.getColumnIndex(KEY_QUANTITY));
+                Donation donation = new Donation(dateAdded, id, quantity);
+
+                // adding to the donations list
+                donations.add(donation);
+            } while (c.moveToNext());
+        }
+
+        return donations;
+    }
+
+    /**
+     * Constructor for the DonationsTableHelper class
      *
      * @param context the context
      */
@@ -63,36 +92,6 @@ public class DonationsTableHelper extends DatabaseHelper
         long donation_id = db.insert(TABLE_DONATIONS, null, values);
 
         return donation_id;
-    }
-
-    /**
-     * Get all donations that have been logged
-     *
-     * @return a list of donations
-     */
-    public ArrayList<Donation> getAllDonations() {
-        ArrayList<Donation> donations = new ArrayList<Donation>();
-
-        String selectQuery = "SELECT * FROM " + TABLE_DONATIONS + " ORDER BY " + KEY_DATE +
-                " DESC, " + KEY_ID + " DESC";
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery(selectQuery, null);
-
-        // looping through all the rows and adding to the list
-        if (c.moveToFirst()) {
-            do {
-                int id = c.getInt(c.getColumnIndex(KEY_ID));
-                String dateAdded = c.getString(c.getColumnIndex(KEY_DATE));
-                int quantity = c.getInt(c.getColumnIndex(KEY_QUANTITY));
-                Donation donation = new Donation(dateAdded, id, quantity);
-
-                // adding to the donations list
-                donations.add(donation);
-            } while (c.moveToNext());
-        }
-
-        return donations;
     }
 
     /**

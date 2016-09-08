@@ -17,21 +17,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     protected static final int DATABASE_VERSION = 1;
 
     // Database Name
-    protected static final String DATABASE_NAME = "donationDatabase";
+    protected static final String DATABASE_NAME = "milk_matters_app_database";
+
 
     // Table Name
-    protected static final String TABLE_DONATIONS = "donations";
+    protected static final String TABLE_DONATIONS = "donations_table";
+    protected static final String TABLE_FEED = "feed_table";
 
-    // Column names
+    // Common column names
     protected static final String KEY_ID = "id";
     protected static final String KEY_DATE = "date";
+
+    // Donations table column names
     protected static final String KEY_QUANTITY = "quantity";
 
+    // Feed table column names
+    protected static final String KEY_TIMESTAMP = "timestamp";
+    protected static final String KEY_TITLE = "title";
+    protected static final String KEY_CONTENT = "content";
+    protected static final String KEY_HYPERLINK = "hyperlink";
+    protected static final String KEY_TIME = "time";
+    protected static final String KEY_PLACE = "place";
+    protected static final String KEY_TYPE = "item_type";
+
     // Table Create Statement
-    // Transaction table create statement
+    // Donations table create statement
     protected static final String CREATE_TABLE_DONATIONS = "CREATE TABLE "
             + TABLE_DONATIONS + "(" + KEY_ID + " INTEGER PRIMARY KEY, " + KEY_DATE + " DATE, " +
             KEY_QUANTITY + " INTEGER" + ");";
+
+    // Feed table create statement
+    protected static final String CREATE_TABLE_FEED = "CREATE TABLE "
+            + TABLE_FEED + "(" + KEY_ID + " INTEGER PRIMARY KEY, " + KEY_TIMESTAMP + " STRING, " +
+            KEY_TITLE + " STRING, " + KEY_CONTENT + " STRING, " + KEY_HYPERLINK +
+            " STRING, " + KEY_DATE + " DATE, " + KEY_TIME + " STRING, " + KEY_PLACE +
+             " STRING, " + KEY_TYPE + " STRING" + ");";
 
     // Data
     private int day;
@@ -56,6 +76,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // create the table
         db.execSQL(CREATE_TABLE_DONATIONS);
+        db.execSQL(CREATE_TABLE_FEED);
     }
 
     /**
@@ -68,6 +89,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // drops older tables on update
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_DONATIONS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_FEED);
 
         // create the new tables
         onCreate(db);
