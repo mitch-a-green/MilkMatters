@@ -27,6 +27,9 @@
     <string name="email">\nEmail</string>
     <string name="email_us">Email Us</string>
 
+    <!-- News feed strings -->
+    <string name="show_more">--- Show More ---</string>
+
     <!-- Milk Matters information -->
     <string name="office">0216595599</string>
     <string name="cell">0828958004</string>

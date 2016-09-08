@@ -1,14 +1,22 @@
 package com.milkmatters.honoursproject.milkmatters.fragments;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.milkmatters.honoursproject.milkmatters.R;
+import com.milkmatters.honoursproject.milkmatters.adapters.FeedAdapter;
+import com.milkmatters.honoursproject.milkmatters.database.FeedTableHelper;
+import com.milkmatters.honoursproject.milkmatters.model.FeedItem;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +24,16 @@ import com.milkmatters.honoursproject.milkmatters.R;
  * create an instance of this fragment.
  */
 public class NewsFeedFragment extends Fragment {
+    // Context
+    private Context context;
+    // Data
+    private ArrayList<FeedItem> feedItems = new ArrayList<FeedItem>();
+    // Helper
+    private FeedTableHelper feedTableHelper;
+    // View
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
     private View view;
 
     public NewsFeedFragment() {
@@ -35,6 +53,10 @@ public class NewsFeedFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.context = this.getContext();
+        this.feedTableHelper = new FeedTableHelper(this.context);
+        this.feedItems = this.feedTableHelper.getAllFeedItems();
+        this.feedTableHelper.closeDB();
     }
 
     @Override
@@ -43,8 +65,21 @@ public class NewsFeedFragment extends Fragment {
         // Inflate the layout for this fragment
 
         this.view = inflater.inflate(R.layout.fragment_news_feed, container, false);
-
         hideFAB();
+
+        mRecyclerView = (RecyclerView) this.view.findViewById(R.id.feed_recycler_view);
+
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        mRecyclerView.setHasFixedSize(true);
+
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(this.getContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        // specify an adapter
+        mAdapter = new FeedAdapter(this.feedItems);
+        mRecyclerView.setAdapter(mAdapter);
 
         return this.view;
     }
@@ -65,5 +100,34 @@ public class NewsFeedFragment extends Fragment {
     {
         FloatingActionButton fab = (FloatingActionButton) this.getActivity().findViewById(R.id.fab);
         fab.hide();
+    }
+
+    /**
+     * Overridden onPause method
+     */
+    public void onPause()
+    {
+        super.onPause();
+    }
+
+    /**
+     * Overridden onResume method
+     */
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        // store the context in a variable so it can be accessed from onClick event handlers
+        this.context = this.getContext();
+
+        this.feedTableHelper = new FeedTableHelper(this.getContext());
+
+        // Update the data
+        this.feedItems.clear();
+        this.feedItems.addAll(this.feedTableHelper.getAllFeedItems());
+        mAdapter.notifyDataSetChanged();
+
+        // Close the connection to the database
+        this.feedTableHelper.closeDB();
     }
 }

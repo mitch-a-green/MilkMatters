@@ -1,5 +1,6 @@
 package com.milkmatters.honoursproject.milkmatters.activities;
 
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -22,7 +23,9 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.milkmatters.honoursproject.milkmatters.R;
+import com.milkmatters.honoursproject.milkmatters.adapters.FeedAdapter;
 import com.milkmatters.honoursproject.milkmatters.database.DonationsTableHelper;
+import com.milkmatters.honoursproject.milkmatters.database.FeedTableHelper;
 import com.milkmatters.honoursproject.milkmatters.dialogs.LogDonationDialogFragment;
 import com.milkmatters.honoursproject.milkmatters.fragments.AboutFragment;
 import com.milkmatters.honoursproject.milkmatters.fragments.BecomeDonorFragment;
@@ -32,6 +35,7 @@ import com.milkmatters.honoursproject.milkmatters.fragments.EducationFragment;
 import com.milkmatters.honoursproject.milkmatters.fragments.HomeFragment;
 import com.milkmatters.honoursproject.milkmatters.fragments.NewsFeedFragment;
 import com.milkmatters.honoursproject.milkmatters.model.Donation;
+import com.milkmatters.honoursproject.milkmatters.model.NewsItem;
 
 /**
  * Main activity.
@@ -43,6 +47,7 @@ public class MainActivity extends AppCompatActivity
         LogDonationDialogFragment.NoticeDialogListener,
         AboutFragment.OnFragmentInteractionListener {
     private Fragment fragment;
+    SharedPreferences prefs = null;
 
     /**
      * Overridden onCreate method
@@ -54,6 +59,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        prefs = getSharedPreferences("com.milkmatters.honoursproject.milkmatters", MODE_PRIVATE);
 
         fragment = null;
         fragment = new HomeFragment();
@@ -199,6 +205,23 @@ public class MainActivity extends AppCompatActivity
     public void onResume()
     {
         super.onResume();
+
+        if (prefs.getBoolean("first_run", true)) {
+            // Do first run stuff here then set 'firstrun' as false
+            // using the following line to edit/commit prefs
+
+            FeedTableHelper feedTableHelper = new FeedTableHelper(this.getApplicationContext());
+            NewsItem newsItem1 = new NewsItem("Milk Needed", "We need milk due to excessive demand.",
+                    "08-06-2016", "www.milkmatters.org");
+            NewsItem newsItem2 = new NewsItem("Baby Timmy Saved", "Baby Timmy was saved. He was born 5 weeks premature and could not tolerate formula.",
+                    "07-06-2016", "www.milkmatters.org");
+            feedTableHelper.createNewsItem(newsItem1);
+            feedTableHelper.createNewsItem(newsItem2);
+            feedTableHelper.closeDB();
+
+            prefs.edit().putBoolean("first_run", false).commit();
+        }
+
         fragment.onResume();
     }
 
