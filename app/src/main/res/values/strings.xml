@@ -13,7 +13,7 @@
     <string name="home_fragment">Home</string>
     <string name="about_fragment">About</string>
     <string name="become_donor_fragment">Become A Donor</string>
-    <string name="news_feed_fragment">News and Announcements</string>
+    <string name="news_feed_fragment">News and Events</string>
     <string name="action_log_donation">Log Donation</string>
 
     <!-- About screen strings -->

@@ -106,7 +106,7 @@ public class FeedTableHelper extends DatabaseHelper {
         ArrayList<FeedItem> feedItems = new ArrayList<FeedItem>();
 
         String selectQuery = "SELECT * FROM " + TABLE_FEED + " ORDER BY " + KEY_TIMESTAMP +
-                " DESC, " + KEY_ID + " DESC";
+                " DESC, " + KEY_ID + " ASC";
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);

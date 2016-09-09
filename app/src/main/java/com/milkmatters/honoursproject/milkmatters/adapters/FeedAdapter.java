@@ -1,6 +1,8 @@
 package com.milkmatters.honoursproject.milkmatters.adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +20,15 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        private final int SHORT_TEXT_MAX_LINES = 2;
+        private boolean expanded = false;
         // each data item is just a string in this case
         public View view;
         protected TextView titleTextView;
         protected TextView timestampTextView;
         protected TextView contentTextView;
         protected TextView hyperlinkTextView;
+        protected TextView showMoreTextView;
         public ViewHolder(View v) {
             super(v);
             view = v;
@@ -31,6 +36,24 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             timestampTextView = (TextView) view.findViewById(R.id.timestamp);
             contentTextView = (TextView) view.findViewById(R.id.content);
             hyperlinkTextView = (TextView) view.findViewById(R.id.hyperlink);
+            showMoreTextView = (TextView) view.findViewById(R.id.show_more);
+            showMoreTextView.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    if (expanded == false) {
+                        contentTextView.setMaxLines(Integer.MAX_VALUE);
+                        contentTextView.setEllipsize(null);
+                        showMoreTextView.setText("--- Show Less ---");
+                        expanded = true;
+                    }
+                    else
+                    {
+                        contentTextView.setMaxLines(SHORT_TEXT_MAX_LINES);
+                        contentTextView.setEllipsize(TextUtils.TruncateAt.END);
+                        showMoreTextView.setText("--- Show More ---");
+                        expanded = false;
+                    }
+                }
+            });
         }
     }
 
@@ -58,9 +81,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         // - replace the contents of the view with that element
         //holder.mTextView.setText(mDataset[position]);
         holder.titleTextView.setText(mDataset.get(position).getTitle());
-        holder.timestampTextView.setText(mDataset.get(position).getTimeStamp());
         holder.contentTextView.setText(mDataset.get(position).getContent());
         holder.hyperlinkTextView.setText(mDataset.get(position).getHyperlink());
+        holder.timestampTextView.setText(mDataset.get(position).toString());
     }
 
     // Return the size of your dataset (invoked by the layout manager)

@@ -40,6 +40,15 @@ public class FeedItem {
         this.hyperlink = hyperlink;
     }
 
+    /**
+     * Method to return a string of the date (and time and place where appropriate)
+     * @return the date (and time and place where appropriate)
+     */
+    public String toString()
+    {
+        return this.timeStamp;
+    }
+
     // getters and setters
 
     public int getId() {

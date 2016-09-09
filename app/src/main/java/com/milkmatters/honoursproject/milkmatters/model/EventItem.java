@@ -44,6 +44,19 @@ public class EventItem extends FeedItem {
         this.eventPlace = eventPlace;
     }
 
+    /**
+     * Overridden toString
+     * @return the date, time and place of the event
+     */
+    @Override
+    public String toString()
+    {
+        String output = "Date:\t\t\t" + this.eventDate;
+        output = output + "\nTime:\t\t" + this.eventTime;
+        output = output + "\nPlace:\t\t" + this.eventPlace;
+        return output;
+    }
+
     // getters and setters
 
     public String getEventDate() {

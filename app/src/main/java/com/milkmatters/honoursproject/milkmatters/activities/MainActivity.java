@@ -35,6 +35,7 @@ import com.milkmatters.honoursproject.milkmatters.fragments.EducationFragment;
 import com.milkmatters.honoursproject.milkmatters.fragments.HomeFragment;
 import com.milkmatters.honoursproject.milkmatters.fragments.NewsFeedFragment;
 import com.milkmatters.honoursproject.milkmatters.model.Donation;
+import com.milkmatters.honoursproject.milkmatters.model.EventItem;
 import com.milkmatters.honoursproject.milkmatters.model.NewsItem;
 
 /**
@@ -213,9 +214,12 @@ public class MainActivity extends AppCompatActivity
             FeedTableHelper feedTableHelper = new FeedTableHelper(this.getApplicationContext());
             NewsItem newsItem1 = new NewsItem("Milk Needed", "We need milk due to excessive demand.",
                     "08-06-2016", "www.milkmatters.org");
-            NewsItem newsItem2 = new NewsItem("Baby Timmy Saved", "Baby Timmy was saved. He was born 5 weeks premature and could not tolerate formula.",
+            NewsItem newsItem2 = new NewsItem("Baby Timmy Saved", "Baby Timmy was saved. He was born 5 weeks premature and could not tolerate formula. His mother was very happy and excited. Thank you to all the moms who helped contribute and gave him a second chance at life.",
                     "07-06-2016", "www.milkmatters.org");
+            EventItem eventItem = new EventItem("Milk Matters Workshop", "Two honours students will be demonstrating the Milk Matters App",
+                    "07-06-2016", "www.milkmatters.org", "14-09-2016", "10:00", "Rustenburg Square");
             feedTableHelper.createNewsItem(newsItem1);
+            feedTableHelper.createEventItem(eventItem);
             feedTableHelper.createNewsItem(newsItem2);
             feedTableHelper.closeDB();
 
