@@ -1,6 +1,7 @@
 package com.milkmatters.honoursproject.milkmatters.activities;
 
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 
 import com.milkmatters.honoursproject.milkmatters.R;
 import com.milkmatters.honoursproject.milkmatters.adapters.FeedAdapter;
+import com.milkmatters.honoursproject.milkmatters.database.DepotsTableHelper;
 import com.milkmatters.honoursproject.milkmatters.database.DonationsTableHelper;
 import com.milkmatters.honoursproject.milkmatters.database.FeedTableHelper;
 import com.milkmatters.honoursproject.milkmatters.dialogs.LogDonationDialogFragment;
@@ -34,6 +36,7 @@ import com.milkmatters.honoursproject.milkmatters.fragments.DonationTrackingFrag
 import com.milkmatters.honoursproject.milkmatters.fragments.EducationFragment;
 import com.milkmatters.honoursproject.milkmatters.fragments.HomeFragment;
 import com.milkmatters.honoursproject.milkmatters.fragments.NewsFeedFragment;
+import com.milkmatters.honoursproject.milkmatters.model.Depot;
 import com.milkmatters.honoursproject.milkmatters.model.Donation;
 import com.milkmatters.honoursproject.milkmatters.model.EventItem;
 import com.milkmatters.honoursproject.milkmatters.model.NewsItem;
@@ -307,6 +310,22 @@ public class MainActivity extends AppCompatActivity
             feedTableHelper.createEventItem(eventItem3);
             feedTableHelper.createEventItem(eventItem4);
             feedTableHelper.closeDB();
+
+            DepotsTableHelper depotsTableHelper = new DepotsTableHelper(this.getApplicationContext());
+            Location location1 = new Location("");
+            location1.setLatitude(-33.949444);
+            location1.setLongitude(18.475001);
+            Location location2 = new Location("");
+            location2.setLatitude(-33.9539518);
+            location2.setLongitude(18.48858960000007);
+            Depot depot1 = new Depot("Milk Matters Headquarters", "08:00 - 16:00",
+                    "Jenny Wright", "021 555 7891", "", location1);
+            Depot depot2 = new Depot("Red Cross Children's Hospital - Medical Clinic",
+                    "08:00 - 16:00", "Susan Malherbe",
+                    "021 333 2211", "", location2);
+            depotsTableHelper.createDepot(depot1);
+            depotsTableHelper.createDepot(depot2);
+            depotsTableHelper.closeDB();
 
             prefs.edit().putBoolean("first_run", false).commit();
         }

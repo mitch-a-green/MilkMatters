@@ -23,6 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Table Name
     protected static final String TABLE_DONATIONS = "donations_table";
     protected static final String TABLE_FEED = "feed_table";
+    protected static final String TABLE_DEPOTS = "depots_table";
 
     // Common column names
     protected static final String KEY_ID = "id";
@@ -40,6 +41,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     protected static final String KEY_PLACE = "place";
     protected static final String KEY_TYPE = "item_type";
 
+    // Depots table column names
+    protected static final String KEY_NAME = "name";
+    protected static final String KEY_HOURS = "hours";
+    protected static final String KEY_CONTACT_NAME = "contact_name";
+    protected static final String KEY_CONTACT_DETAILS = "contact_details";
+    protected static final String KEY_EXTRA = "extra";
+    protected static final String KEY_LATITUDE = "latitude";
+    protected static final String KEY_LONGITUDE = "longitude";
+
     // Table Create Statement
     // Donations table create statement
     protected static final String CREATE_TABLE_DONATIONS = "CREATE TABLE "
@@ -52,6 +62,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             KEY_TITLE + " STRING, " + KEY_CONTENT + " STRING, " + KEY_HYPERLINK +
             " STRING, " + KEY_DATE + " DATE, " + KEY_TIME + " STRING, " + KEY_PLACE +
              " STRING, " + KEY_TYPE + " STRING" + ");";
+
+    // Depot table create statement
+    protected static final String CREATE_TABLE_DEPOTS = "CREATE TABLE "
+            + TABLE_DEPOTS + "(" + KEY_ID + " INTEGER PRIMARY KEY, " + KEY_NAME + " STRING, " +
+            KEY_HOURS + " STRING, " + KEY_CONTACT_NAME + " STRING, " + KEY_CONTACT_DETAILS +
+            " STRING, " + KEY_EXTRA + " STRING, " + KEY_LATITUDE + " REAL, " + KEY_LONGITUDE +
+            " REAL" + ");";
 
     // Data
     private int day;
@@ -77,6 +94,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // create the table
         db.execSQL(CREATE_TABLE_DONATIONS);
         db.execSQL(CREATE_TABLE_FEED);
+        db.execSQL(CREATE_TABLE_DEPOTS);
     }
 
     /**
@@ -90,6 +108,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // drops older tables on update
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_DONATIONS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_FEED);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_DEPOTS);
 
         // create the new tables
         onCreate(db);

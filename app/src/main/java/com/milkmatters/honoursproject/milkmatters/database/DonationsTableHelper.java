@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 
 /**
- * Database helper class for the meters table
+ * Database helper class for the donations table
  */
 public class DonationsTableHelper extends DatabaseHelper
 {

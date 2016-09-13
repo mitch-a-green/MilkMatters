@@ -13,7 +13,7 @@ import com.milkmatters.honoursproject.milkmatters.model.NewsItem;
 import java.util.ArrayList;
 
 /**
- * Database helper class for the meters table.
+ * Database helper class for the feed table.
  */
 public class FeedTableHelper extends DatabaseHelper {
     /**

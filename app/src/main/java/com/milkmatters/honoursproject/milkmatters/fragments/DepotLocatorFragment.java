@@ -1,9 +1,15 @@
 package com.milkmatters.honoursproject.milkmatters.fragments;
 
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,9 +21,18 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.milkmatters.honoursproject.milkmatters.R;
+import com.milkmatters.honoursproject.milkmatters.adapters.MapInfoWindowAdapter;
+import com.milkmatters.honoursproject.milkmatters.database.DepotsTableHelper;
+import com.milkmatters.honoursproject.milkmatters.model.Depot;
+
+import java.util.ArrayList;
+
+import static android.content.Context.LOCATION_SERVICE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +42,7 @@ import com.milkmatters.honoursproject.milkmatters.R;
 public class DepotLocatorFragment extends Fragment implements OnMapReadyCallback {
     private View view;
     private GoogleMap mMap;
+    private ArrayList<Depot> depots;
 
     public DepotLocatorFragment() {
         // Required empty public constructor
@@ -66,8 +82,7 @@ public class DepotLocatorFragment extends Fragment implements OnMapReadyCallback
     /**
      * Method to show the floating action button
      */
-    public void showFAB()
-    {
+    public void showFAB() {
         FloatingActionButton fab = (FloatingActionButton) this.getActivity().findViewById(R.id.fab);
         fab.show();
     }
@@ -75,8 +90,7 @@ public class DepotLocatorFragment extends Fragment implements OnMapReadyCallback
     /**
      * Method to hide the floating action button
      */
-    public void hideFAB()
-    {
+    public void hideFAB() {
         FloatingActionButton fab = (FloatingActionButton) this.getActivity().findViewById(R.id.fab);
         fab.hide();
     }
@@ -93,18 +107,39 @@ public class DepotLocatorFragment extends Fragment implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        // add the location layer
+        mMap.setMyLocationEnabled(true);
+        mMap.getUiSettings().setMyLocationButtonEnabled(true);
 
-        // Add a marker at Milk Matters and move the camera
+        // store the location of milk matters
         LatLng milkMatters = new LatLng(-33.949444, 18.475001);
-        mMap.addMarker(new MarkerOptions().position(milkMatters)
-                .title("Milk Matters")
-                .snippet("Milk Matters Headquarters")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)));
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(milkMatters));
-        // Move the camera instantly to hamburg with a zoom of 15.
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(milkMatters, 12));
 
+        // get all the depots
+        DepotsTableHelper depotsTableHelper = new DepotsTableHelper(this.getContext());
+        ArrayList<Depot> depots = depotsTableHelper.getAllDepots();
+        depotsTableHelper.closeDB();
+
+        // create a marker for each depot
+        for (Depot depot: depots)
+        {
+            LatLng latLng = new LatLng(depot.getLocation().getLatitude(),
+                    depot.getLocation().getLongitude());
+            mMap.addMarker(new MarkerOptions().position(latLng)
+                    .title(depot.getName())
+                    .snippet(depot.getSnippet())
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)));
+        }
+
+        // Move the camera instantly to milk matters with a zoom of 13.
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(milkMatters, 13));
         // Zoom in, animating the camera.
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(12), 1500, null);
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(13), 1500, null);
+
+        /* Use a custom map info window adapter.
+           Changes the layout of the info window.
+         */
+        MapInfoWindowAdapter mapInfoWindowAdapter =
+                new MapInfoWindowAdapter(this.getActivity().getLayoutInflater());
+        mMap.setInfoWindowAdapter(mapInfoWindowAdapter);
     }
 }
