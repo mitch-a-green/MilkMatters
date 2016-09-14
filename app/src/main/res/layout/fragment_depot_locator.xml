@@ -1,8 +1,10 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.milkmatters.honoursproject.milkmatters.fragments.DepotLocatorFragment">
+
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -10,7 +12,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/map"
+        android:layout_weight="1"
         tools:context="com.milkmatters.honoursproject.milkmatters.activities.MainActivity"
         android:name="com.google.android.gms.maps.SupportMapFragment"/>
 
-</FrameLayout>
+    <Button
+        android:id="@+id/find_nearest_depot_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:background="@color/colorPrimary"
+        android:text="@string/find_nearest_depot"/>
+
+</LinearLayout>

@@ -318,13 +318,20 @@ public class MainActivity extends AppCompatActivity
             Location location2 = new Location("");
             location2.setLatitude(-33.9539518);
             location2.setLongitude(18.48858960000007);
+            Location location3 = new Location("");
+            location3.setLatitude(-33.9857949);
+            location3.setLongitude(18.46715089999998);
             Depot depot1 = new Depot("Milk Matters Headquarters", "08:00 - 16:00",
                     "Jenny Wright", "021 555 7891", "", location1);
             Depot depot2 = new Depot("Red Cross Children's Hospital - Medical Clinic",
                     "08:00 - 16:00", "Susan Malherbe",
                     "021 333 2211", "", location2);
+            Depot depot3 = new Depot("Life Kingsbury Hospital - Maternity Ward & Baby Clinic",
+                    "08:00 - 16:00", "Tim Jennings",
+                    "021 111 2198", "", location3);
             depotsTableHelper.createDepot(depot1);
             depotsTableHelper.createDepot(depot2);
+            depotsTableHelper.createDepot(depot3);
             depotsTableHelper.closeDB();
 
             prefs.edit().putBoolean("first_run", false).commit();

@@ -27,6 +27,9 @@
     <string name="email">\nEmail</string>
     <string name="email_us">Email Us</string>
 
+    <!-- Depot locator strings -->
+    <string name="find_nearest_depot">Find Your Nearest Depot</string>
+
     <!-- News feed strings -->
     <string name="show_more">--- Show More ---</string>
 
