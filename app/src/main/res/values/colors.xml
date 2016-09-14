@@ -4,4 +4,9 @@
     <color name="colorPrimaryDark">#a70048</color>
     <color name="colorAccent">#db0963</color>
     <color name="colorLightPink">#eeb8d4</color>
+
+    <color name="translucentWhite">#c0ffffff</color>
+    <color name="translucentBlack">#762e2e2e</color>
+    <color name="translucentGray">#a2433f3f</color>
+    <color name="translucentPink">#35db0963</color>
 </resources>
