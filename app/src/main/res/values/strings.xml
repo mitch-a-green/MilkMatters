@@ -38,5 +38,9 @@
     <string name="cell">0828958004</string>
     <string name="email_address">info@milkmatters.org</string>
 
+    <!-- Become a donor strings -->
+    <string name="str_next">Next Question</string>
+    <string name="title_fragment_result">Result</string>
+
     <!-- Miscellaneous strings -->
 </resources>

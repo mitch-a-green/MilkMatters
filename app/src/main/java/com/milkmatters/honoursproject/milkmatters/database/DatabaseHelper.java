@@ -24,6 +24,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     protected static final String TABLE_DONATIONS = "donations_table";
     protected static final String TABLE_FEED = "feed_table";
     protected static final String TABLE_DEPOTS = "depots_table";
+    protected static final String TABLE_BECOME_DONOR = "become_donor_table";
 
     // Common column names
     protected static final String KEY_ID = "id";
@@ -50,6 +51,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     protected static final String KEY_LATITUDE = "latitude";
     protected static final String KEY_LONGITUDE = "longitude";
 
+    // Become a donor table column names
+    protected static final String KEY_QUES = "question";
+    protected static final String KEY_ANSWER = "answer"; //always no, and if they select answer it makes them illegible
+    protected static final String KEY_OPTA= "opta"; //yes statement
+    protected static final String KEY_OPTB= "optb"; //additional yes statement
+    protected static final String KEY_OPTC= "optc"; //no statement
+
     // Table Create Statement
     // Donations table create statement
     protected static final String CREATE_TABLE_DONATIONS = "CREATE TABLE "
@@ -69,6 +77,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             KEY_HOURS + " STRING, " + KEY_CONTACT_NAME + " STRING, " + KEY_CONTACT_DETAILS +
             " STRING, " + KEY_EXTRA + " STRING, " + KEY_LATITUDE + " REAL, " + KEY_LONGITUDE +
             " REAL" + ");";
+
+    // Become a donor table create statement
+    protected static final String CREATE_TABLE_BECOME_DONOR = "CREATE TABLE "
+            + TABLE_BECOME_DONOR + "(" + KEY_ID + " INTEGER PRIMARY KEY, " + KEY_QUES
+            + " TEXT, " + KEY_ANSWER+ " TEXT, "+KEY_OPTA +" TEXT, "
+            +KEY_OPTB +" TEXT, "+KEY_OPTC+" TEXT);";
 
     // Data
     private int day;
@@ -95,6 +109,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_DONATIONS);
         db.execSQL(CREATE_TABLE_FEED);
         db.execSQL(CREATE_TABLE_DEPOTS);
+        db.execSQL(CREATE_TABLE_BECOME_DONOR);
     }
 
     /**
@@ -109,6 +124,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_DONATIONS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_FEED);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_DEPOTS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_BECOME_DONOR);
 
         // create the new tables
         onCreate(db);

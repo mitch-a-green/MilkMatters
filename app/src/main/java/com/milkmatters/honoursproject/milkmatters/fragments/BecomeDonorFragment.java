@@ -1,14 +1,24 @@
 package com.milkmatters.honoursproject.milkmatters.fragments;
 
-
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.milkmatters.honoursproject.milkmatters.R;
+import com.milkmatters.honoursproject.milkmatters.database.BecomeDonorTableHelper;
+import com.milkmatters.honoursproject.milkmatters.model.Question;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,7 +26,28 @@ import com.milkmatters.honoursproject.milkmatters.R;
  * create an instance of this fragment.
  */
 public class BecomeDonorFragment extends Fragment {
+    private BecomeDonorFragment.OnFormCompleteListener mListener;
+
+    // Context
+    private Context context;
+    // Data
+    private ArrayList<Question> quesList = new ArrayList<Question>();
+    // Helper
+    private BecomeDonorTableHelper becomeDonorTableHelper;
+    //view
     private View view;
+    int score=5;
+    int qid=0;
+    Question currentQ;
+    TextView txtQuestion;
+    RadioButton rda, rdb, rdc;
+    Button butNext;
+
+    // Container Activity must implement this interface
+    public interface OnFormComplete {
+        public void onReturnScore(int score);
+    }
+
 
     public BecomeDonorFragment() {
         // Required empty public constructor
@@ -35,6 +66,10 @@ public class BecomeDonorFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.context = this.getContext();
+        this.becomeDonorTableHelper = new BecomeDonorTableHelper(this.context);
+        this.quesList = this.becomeDonorTableHelper.getAllQuestions();
+        this.becomeDonorTableHelper.closeDB();
     }
 
     @Override
@@ -44,6 +79,35 @@ public class BecomeDonorFragment extends Fragment {
         this.view = inflater.inflate(R.layout.fragment_become_donor, container, false);
 
         hideFAB();
+
+        this.becomeDonorTableHelper = new BecomeDonorTableHelper(this.getContext());
+        quesList=this.becomeDonorTableHelper.getAllQuestions();
+        currentQ=quesList.get(qid);
+        txtQuestion=(TextView)this.view.findViewById(R.id.textView1);
+        rda=(RadioButton)this.view.findViewById(R.id.radio0);
+        rdb=(RadioButton)this.view.findViewById(R.id.radio1);
+        rdc=(RadioButton)this.view.findViewById(R.id.radio2);
+        butNext=(Button)this.view.findViewById(R.id.button1);
+        setQuestionView();
+        butNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RadioGroup grp=(RadioGroup) view.findViewById(R.id.radioGroup1);
+                RadioButton answer=(RadioButton) view.findViewById(grp.getCheckedRadioButtonId());
+                Log.d("yourans", currentQ.getANSWER()+" "+answer.getText());
+                if(currentQ.getANSWER().equals(answer.getText()))
+                {
+                    score--;
+                    Log.d("score", "Your score"+score);
+                }
+                if(qid<5){
+                    currentQ=quesList.get(qid);
+                    setQuestionView();
+                }else{
+                    onFormCompletePressed(null);
+                }
+            }
+        });
 
         return this.view;
     }
@@ -64,5 +128,50 @@ public class BecomeDonorFragment extends Fragment {
     {
         FloatingActionButton fab = (FloatingActionButton) this.getActivity().findViewById(R.id.fab);
         fab.hide();
+    }
+
+    private void setQuestionView()
+    {
+        txtQuestion.setText(currentQ.getQUESTION());
+        rda.setText(currentQ.getOPTA());
+        rdb.setText(currentQ.getOPTB());
+        rdc.setText(currentQ.getOPTC());
+        qid++;
+    }
+
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onFormCompletePressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFormComplete(uri);
+        }
+    }
+
+    /**
+     * Overridden onAttach method
+     * @param context the context
+     */
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof BecomeDonorFragment.OnFormCompleteListener) {
+            mListener = (BecomeDonorFragment.OnFormCompleteListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnFormCompleteListener {
+        void onFormComplete(Uri uri);
     }
 }

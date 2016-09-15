@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.milkmatters.honoursproject.milkmatters.R;
 import com.milkmatters.honoursproject.milkmatters.adapters.FeedAdapter;
+import com.milkmatters.honoursproject.milkmatters.database.BecomeDonorTableHelper;
 import com.milkmatters.honoursproject.milkmatters.database.DepotsTableHelper;
 import com.milkmatters.honoursproject.milkmatters.database.DonationsTableHelper;
 import com.milkmatters.honoursproject.milkmatters.database.FeedTableHelper;
@@ -36,10 +37,12 @@ import com.milkmatters.honoursproject.milkmatters.fragments.DonationTrackingFrag
 import com.milkmatters.honoursproject.milkmatters.fragments.EducationFragment;
 import com.milkmatters.honoursproject.milkmatters.fragments.HomeFragment;
 import com.milkmatters.honoursproject.milkmatters.fragments.NewsFeedFragment;
+import com.milkmatters.honoursproject.milkmatters.fragments.ResultFragment;
 import com.milkmatters.honoursproject.milkmatters.model.Depot;
 import com.milkmatters.honoursproject.milkmatters.model.Donation;
 import com.milkmatters.honoursproject.milkmatters.model.EventItem;
 import com.milkmatters.honoursproject.milkmatters.model.NewsItem;
+import com.milkmatters.honoursproject.milkmatters.model.Question;
 
 /**
  * Main activity.
@@ -49,7 +52,8 @@ import com.milkmatters.honoursproject.milkmatters.model.NewsItem;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         LogDonationDialogFragment.NoticeDialogListener,
-        AboutFragment.OnFragmentInteractionListener {
+        AboutFragment.OnFragmentInteractionListener,
+        BecomeDonorFragment.OnFormCompleteListener{
     private Fragment fragment;
     SharedPreferences prefs = null;
 
@@ -333,6 +337,7 @@ public class MainActivity extends AppCompatActivity
             depotsTableHelper.createDepot(depot2);
             depotsTableHelper.createDepot(depot3);
             depotsTableHelper.closeDB();
+            addQuestions();
 
             prefs.edit().putBoolean("first_run", false).commit();
         }
@@ -416,6 +421,31 @@ public class MainActivity extends AppCompatActivity
         fragment = null;
         fragment = new BecomeDonorFragment();
         String title = getString(R.string.become_donor_fragment);
+        this.switchFragment(title);
+    }
+
+    private void addQuestions()
+    {
+        BecomeDonorTableHelper becomeDonorTableHelper =
+                new BecomeDonorTableHelper(this.getApplicationContext());
+        Question q1=new Question("Would you be willing to complete a donor screening form?","Yes", "As long as it isn't too long", "No", "No");
+        becomeDonorTableHelper.addQuestion(q1);
+        Question q2=new Question("Would you be willing to do a HIV and Hepatitis B blood test?", "Yes", "As long as its free", "No", "No");
+        becomeDonorTableHelper.addQuestion(q2);
+        Question q3=new Question("Are you able to collect sterile jars for milk from Milk Matters?","Yes", "Depends on how often","No","No");
+        becomeDonorTableHelper.addQuestion(q3);
+        Question q4=new Question("Do you have storage facilities to freeze your milk at home?",	"Yes", "I can make a plan", "No", "No");
+        becomeDonorTableHelper.addQuestion(q4);
+        Question q5=new Question("Are you able to drop off your donations at a depot location?","Yes","It will be challenging, but I'll try", "No","No");
+        becomeDonorTableHelper.addQuestion(q5);
+        becomeDonorTableHelper.closeDB();
+    }
+
+    @Override
+    public void onFormComplete(Uri uri) {
+        fragment = null;
+        fragment = ResultFragment.newInstance(4);
+        String title = getString(R.string.title_fragment_result);
         this.switchFragment(title);
     }
 }
