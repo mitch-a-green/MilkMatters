@@ -94,11 +94,9 @@ public class BecomeDonorFragment extends Fragment {
             public void onClick(View v) {
                 RadioGroup grp=(RadioGroup) view.findViewById(R.id.radioGroup1);
                 RadioButton answer=(RadioButton) view.findViewById(grp.getCheckedRadioButtonId());
-                Log.d("yourans", currentQ.getANSWER()+" "+answer.getText());
                 if(currentQ.getANSWER().equals(answer.getText()))
                 {
                     score--;
-                    Log.d("score", "Your score"+score);
                 }
                 if(qid<5){
                     currentQ=quesList.get(qid);
