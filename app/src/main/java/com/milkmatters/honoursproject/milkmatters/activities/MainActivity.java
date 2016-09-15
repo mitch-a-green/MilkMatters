@@ -445,7 +445,7 @@ public class MainActivity extends AppCompatActivity
     public void onFormComplete(int score) {
         fragment = null;
         fragment = ResultFragment.newInstance(score);
-        String title = getString(R.string.title_fragment_result);
+        String title = getString(R.string.become_donor_fragment);
         this.switchFragment(title);
     }
 }
