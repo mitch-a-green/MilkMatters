@@ -68,18 +68,18 @@ public class ResultFragment extends Fragment{
         bar.setRating(score);
         switch (score)
         {
-            case 0: t.setText("Unfortunately you are ineligible to become a donor. \n" +
+            case 0: t.setText("Unfortunately you are ineligible to become a donor. \n\n" +
                     "However, please consider donating equipment or money (which can be done through myschool/myvillage).");
                 break;
             case 1:
-            case 2: t.setText("Unfortunately you are ineligible to become a donor. \n" +
+            case 2: t.setText("Unfortunately you are ineligible to become a donor. \n\n" +
                     "However, please consider donating equipment or money (which can be done through myschool/myvillage).");
                 break;
             case 3:
-            case 4:t.setText("Unfortunately you are ineligible to become a donor. \n" +
+            case 4:t.setText("Unfortunately you are ineligible to become a donor. \n\n" +
                     "However, please consider donating equipment or money (which can be done through myschool/myvillage).");
                 break;
-            case 5:t.setText("Congratulations, you are eligible to be a potential donor. \n" +
+            case 5:t.setText("Congratulations, you are eligible to be a potential donor. \n\n" +
                     "Please get in contact with us if you are willing to make a difference.");
                 break;
         }
