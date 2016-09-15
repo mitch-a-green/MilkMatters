@@ -1,6 +1,8 @@
 package com.milkmatters.honoursproject.milkmatters.fragments;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -8,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -66,25 +69,51 @@ public class ResultFragment extends Fragment{
         TextView t=(TextView)this.view.findViewById(R.id.textResult);
         //display score
         bar.setRating(score);
-        switch (score)
-        {
-            case 0: t.setText("Unfortunately you are ineligible to become a donor. \n\n" +
-                    "However, please consider donating equipment or money (which can be done through myschool/myvillage).");
-                break;
-            case 1:
-            case 2: t.setText("Unfortunately you are ineligible to become a donor. \n\n" +
-                    "However, please consider donating equipment or money (which can be done through myschool/myvillage).");
-                break;
-            case 3:
-            case 4:t.setText("Unfortunately you are ineligible to become a donor. \n\n" +
-                    "However, please consider donating equipment or money (which can be done through myschool/myvillage).");
-                break;
-            case 5:t.setText("Congratulations, you are eligible to be a potential donor. \n\n" +
+        if(score>4){
+            t.setText("Congratulations, you are eligible to be a potential donor. \n\n" +
                     "Please get in contact with us if you are willing to make a difference.");
-                break;
+        }
+        else {
+            t.setText("Unfortunately you are ineligible to become a donor. \n\n" +
+                    "However, please consider donating equipment or money (which can be done through myschool/myvillage).");
         }
 
+        // add functionality to send an automated email
+        Button emailUsButton = (Button) this.view.findViewById(R.id.email_us);
+        emailUsButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String[] addresses = {"mitch.a.green@gmail.com", "chelseajoyful@gmail.com"};
+                if(score>4){
+                    String message = "Hi,\n\nI took the become a donor quiz on the app. I am " +
+                            "interested in becoming a donor...";
+                    emailUs(addresses, "Eligible donor", message);
+                }
+                else {
+                    String message = "Hi,\n\nI took the become a donor quiz on the app. " +
+                            "Unfortunately, I answered 'no' to a question and may not be eligible to become a donor. " +
+                            "However, I am " +
+                            "interested in donating equipment/money and joining your mailing list...";
+                    emailUs(addresses, "Helping out", message);
+                }
+            }
+        });
+
         return this.view;
+    }
+
+    /**
+     * Method to send an email to Milk Matters.
+     * @param addresses the email addresses
+     * @param subject the subject of the email
+     */
+    public void emailUs(String[] addresses, String subject, String message) {
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+        emailIntent.setData(Uri.parse("mailto:"));
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, addresses);
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        emailIntent.putExtra(Intent.EXTRA_TEXT, message);
+        if (emailIntent.resolveActivity(getActivity().getPackageManager()) != null)
+            startActivity(emailIntent);
     }
 
     /**
