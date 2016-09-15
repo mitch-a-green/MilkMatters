@@ -31,17 +31,17 @@ public class BecomeDonorFragment extends Fragment {
     // Context
     private Context context;
     // Data
+    private int score=5;
+    private int qid=0;
+    private Question currentQ;
     private ArrayList<Question> quesList = new ArrayList<Question>();
     // Helper
     private BecomeDonorTableHelper becomeDonorTableHelper;
     //view
     private View view;
-    int score=5;
-    int qid=0;
-    Question currentQ;
-    TextView txtQuestion;
-    RadioButton rda, rdb, rdc;
-    Button butNext;
+    private TextView txtQuestion;
+    private RadioButton rda, rdb, rdc;
+    private Button butNext;
 
     // Container Activity must implement this interface
     public interface OnFormComplete {
@@ -139,7 +139,6 @@ public class BecomeDonorFragment extends Fragment {
         qid++;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onFormCompletePressed(int score) {
         if (mListener != null) {
             mListener.onFormComplete(score);
