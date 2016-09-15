@@ -104,7 +104,7 @@ public class BecomeDonorFragment extends Fragment {
                     currentQ=quesList.get(qid);
                     setQuestionView();
                 }else{
-                    onFormCompletePressed(null);
+                    onFormCompletePressed(score);
                 }
             }
         });
@@ -140,9 +140,9 @@ public class BecomeDonorFragment extends Fragment {
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onFormCompletePressed(Uri uri) {
+    public void onFormCompletePressed(int score) {
         if (mListener != null) {
-            mListener.onFormComplete(uri);
+            mListener.onFormComplete(score);
         }
     }
 
@@ -172,6 +172,6 @@ public class BecomeDonorFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFormCompleteListener {
-        void onFormComplete(Uri uri);
+        void onFormComplete(int score);
     }
 }

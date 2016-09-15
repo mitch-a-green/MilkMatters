@@ -442,9 +442,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFormComplete(Uri uri) {
+    public void onFormComplete(int score) {
         fragment = null;
-        fragment = ResultFragment.newInstance(4);
+        fragment = ResultFragment.newInstance(score);
         String title = getString(R.string.title_fragment_result);
         this.switchFragment(title);
     }
