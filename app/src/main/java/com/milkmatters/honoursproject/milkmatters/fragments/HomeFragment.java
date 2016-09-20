@@ -1,13 +1,21 @@
 package com.milkmatters.honoursproject.milkmatters.fragments;
 
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
+import android.widget.TextView;
 
 import com.milkmatters.honoursproject.milkmatters.R;
+import com.milkmatters.honoursproject.milkmatters.database.DonationsTableHelper;
+import com.milkmatters.honoursproject.milkmatters.database.FeedTableHelper;
+import com.milkmatters.honoursproject.milkmatters.model.FeedItem;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +24,8 @@ import com.milkmatters.honoursproject.milkmatters.R;
  */
 public class HomeFragment extends Fragment {
     private View view;
+    private ArrayList<FeedItem> feedItems;
+    private final int AMOUNT_CONSUMED_DAILY = 50;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -63,5 +73,62 @@ public class HomeFragment extends Fragment {
     {
         FloatingActionButton fab = (FloatingActionButton) this.getActivity().findViewById(R.id.fab);
         fab.hide();
+    }
+
+    /**
+     * Overridden onResume method.
+     * Refreshes the views, in case the donations data has changed.
+     */
+    public void onResume()
+    {
+        super.onResume();
+        DonationsTableHelper donationsTableHelper = new DonationsTableHelper(this.getContext());
+        int totalDonated = donationsTableHelper.getTotalDonations();
+        donationsTableHelper.closeDB();
+        TextView totalDonatedTextView = (TextView) this.view.findViewById(R.id.ml_expressed);
+        totalDonatedTextView.setText(String.valueOf(totalDonated) + " ml");
+        TextView babiesFedTextView = (TextView) this.view.findViewById(R.id.babies_fed);
+        int babiesFed = Integer.valueOf(totalDonated / AMOUNT_CONSUMED_DAILY);
+        babiesFedTextView.setText(String.valueOf(babiesFed) + " babies");
+
+
+        FeedTableHelper feedTableHelper = new FeedTableHelper(this.getContext());
+        feedItems = feedTableHelper.getAllFeedItems();
+        FeedItem feedItem = feedItems.get(feedItems.size()-1);
+        feedTableHelper.closeDB();
+
+        TextView titleTextView = (TextView) view.findViewById(R.id.news_item_title);
+        TextView timestampTextView = (TextView) view.findViewById(R.id.timestamp);
+        TextView contentTextView = (TextView) view.findViewById(R.id.content);
+        TextView hyperlinkTextView = (TextView) view.findViewById(R.id.hyperlink);
+        titleTextView.setText(feedItem.getTitle());
+        contentTextView.setText(feedItem.getContent());
+        hyperlinkTextView.setText(feedItem.getHyperlink());
+        timestampTextView.setText(feedItem.toString());
+    }
+
+    /**
+     * Overridden onPause method
+     */
+    public void onPause()
+    {
+        super.onPause();
+    }
+
+    /**
+     * Method to set the size of each cell in the grid
+     */
+    public void setGridSize()
+    {
+        // get the screen size
+        Point size = new Point();
+        this.getActivity().getWindowManager().getDefaultDisplay().getSize(size);
+        int screenWidth = size.x;
+        int halfScreenWidth = (int)(screenWidth *0.5);
+        // set the size of each cell in the grid
+        GridLayout gridLayout = (GridLayout) this.view.findViewById(R.id.grid_layout);
+        gridLayout.setMinimumWidth(screenWidth);
+        gridLayout.getChildAt(0).setMinimumWidth(halfScreenWidth/2);
+        gridLayout.getChildAt(1).setMinimumWidth(halfScreenWidth/2);
     }
 }
