@@ -4,10 +4,13 @@
     android:layout_height="match_parent"
     tools:context="com.milkmatters.honoursproject.milkmatters.fragments.EducationFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <GridView
+        android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/education_fragment" />
+        android:verticalSpacing="0dp"
+        android:horizontalSpacing="0dp"
+        android:stretchMode="columnWidth"
+        android:numColumns="2" />
 
 </FrameLayout>
