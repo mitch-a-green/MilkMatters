@@ -65,42 +65,43 @@ public class EducationFragment extends Fragment {
         {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id)
             {
-                //Log.d("position", ""+position);
+                Intent intent = new Intent(context, MainArticlesActivity.class);
                 switch (position){
+
                     case 0:
-                        //Log.d("position", ""+position);
-                        Intent intent0 = new Intent(context, MainArticlesActivity.class);
-                        startActivity(intent0);
+                        intent.putExtra("URL", "http://www.json-generator.com/api/json/get/bZAjpGamzS?indent=2");
+                        intent.putExtra("title", "Breastfeeding");
                         break;
                     case 1:
-                        Intent intent1 = new Intent(context, MainArticlesActivity.class);
-                        startActivity(intent1);
+                        intent.putExtra("URL", "http://www.json-generator.com/api/json/get/bZAjpGamzS?indent=2");
+                        intent.putExtra("title", "Donation");
                         break;
                     case 2:
-                        Intent intent2 = new Intent(context, MainArticlesActivity.class);
-                        startActivity(intent2);
+                        intent.putExtra("URL", "http://www.json-generator.com/api/json/get/bZAjpGamzS?indent=2");
+                        intent.putExtra("title", "Increase Milk Supply");
                         break;
                     case 3:
-                        Intent intent3 = new Intent(context, MainArticlesActivity.class);
-                        startActivity(intent3);
+                        intent.putExtra("URL", "http://www.json-generator.com/api/json/get/bZAjpGamzS?indent=2");
+                        intent.putExtra("title", "Latching");
                         break;
                     case 4:
-                        Intent intent4 = new Intent(context, MainArticlesActivity.class);
-                        startActivity(intent4);
+                        intent.putExtra("URL", "http://www.json-generator.com/api/json/get/bZAjpGamzS?indent=2");
+                        intent.putExtra("title", "Nutrition");
                         break;
                     case 5:
-                        Intent intent5 = new Intent(context, MainArticlesActivity.class);
-                        startActivity(intent5);
+                        intent.putExtra("URL", "http://www.json-generator.com/api/json/get/bZAjpGamzS?indent=2");
+                        intent.putExtra("title", "Pumping");
                         break;
                     case 6:
-                        Intent intent6 = new Intent(context, MainArticlesActivity.class);
-                        startActivity(intent6);
+                        intent.putExtra("URL", "http://www.json-generator.com/api/json/get/bZAjpGamzS?indent=2");
+                        intent.putExtra("title", "Mastitis");
                         break;
                     case 7:
-                        Intent intent7 = new Intent(context, MainArticlesActivity.class);
-                        startActivity(intent7);
+                        intent.putExtra("URL", "http://www.json-generator.com/api/json/get/bZAjpGamzS?indent=2");
+                        intent.putExtra("title", "Parenting");
                         break;
                 }
+                startActivity(intent);
             }
         });
 

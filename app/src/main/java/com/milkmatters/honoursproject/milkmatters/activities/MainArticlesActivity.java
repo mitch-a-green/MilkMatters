@@ -12,7 +12,9 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.opengl.Visibility;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.widget.ListView;
 
@@ -28,19 +30,22 @@ import com.milkmatters.honoursproject.milkmatters.adapters.FeedListAdapter;
 import com.milkmatters.honoursproject.milkmatters.controller.AppController;
 import com.milkmatters.honoursproject.milkmatters.model.EducationFeedItem;
 
-public class MainArticlesActivity extends Activity {
+public class MainArticlesActivity extends AppCompatActivity {
     private static final String TAG = MainArticlesActivity.class.getSimpleName();
     private ListView listView;
     private FeedListAdapter listAdapter;
     private List<EducationFeedItem> feedItems;
     // private String URL_FEED = "http://api.androidhive.info/feed/feed.json";
-    private String URL_FEED = "http://www.json-generator.com/api/json/get/bZAjpGamzS?indent=2";
+    private String URL_FEED = "";
 
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_articles_main);
+        Bundle extras = this.getIntent().getExtras();
+        URL_FEED = extras.getString("URL");
+        getSupportActionBar().setTitle(extras.getString("title"));
 
         listView = (ListView) findViewById(R.id.list);
 
