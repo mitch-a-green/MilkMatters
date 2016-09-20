@@ -74,7 +74,7 @@ public class PopulateDatabase {
                 "Fortunately, Jessica and her husband hired Austin-based breastfeeding and birth photographer Leilani Rogers to document the birth, and she captured the crawl inch-by-inch. “To witness the connection baby made with mom over the span of that 48 minutes was fascinating,” Rogers said. “She didn’t fuss, just slowly but surely made her way to the nipple and latched on once she was in just the right position.”\n" +
                 "\n" +
                 "Magical, indeed!",
-                "08-19-2016", "http://www.huffingtonpost.com/entry/incredible-mom-and-baby-photos-show-the-beauty-of-the-breast-crawl_us_57b73741e4b03d5136881944");
+                "19-08-2016", "http://www.huffingtonpost.com/entry/incredible-mom-and-baby-photos-show-the-beauty-of-the-breast-crawl_us_57b73741e4b03d5136881944");
         NewsItem newsItem4 = new NewsItem("Breast-Fed Babies May Have Longer Telomeres, Tied to Longevity", "Breast-fed babies have healthier immune systems, score higher on I.Q. tests and may be less prone to obesity than other babies.\n" +
                 "\n" +
                 "Now new research reveals another possible difference in breast-fed babies: They may have longer telomeres.\n" +

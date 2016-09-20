@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#a70048</color>
     <color name="colorAccent">#db0963</color>
     <color name="colorLightPink">#eeb8d4</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
 
     <color name="translucentWhite">#c0ffffff</color>
     <color name="translucentBlack">#762e2e2e</color>

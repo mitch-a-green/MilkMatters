@@ -93,4 +93,13 @@ public class Donation {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    /**
+     * Method to increase the donation by a given amount
+     * @param quantity the quantity to increase the donation by
+     */
+    public void increaseDonation(int quantity)
+    {
+        this.quantity = quantity + this.quantity;
+    }
 }

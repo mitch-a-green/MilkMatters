@@ -81,7 +81,7 @@ public class LogDonationDialogFragment extends DialogFragment {
                         DatePicker datePicker = (DatePicker)
                                 getDialog().findViewById(R.id.datePicker);
                         NoticeDialogListener activity = (NoticeDialogListener) getActivity();
-                        String date = datePicker.getDayOfMonth() + "-" + datePicker.getMonth()
+                        String date = datePicker.getDayOfMonth() + "-" + (datePicker.getMonth() + 1)
                                 + "-" + datePicker.getYear();
                         String quantity = quantityEditText.getText().toString().trim();
                         if ((quantity.equals("")) || (quantity == null))

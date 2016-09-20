@@ -51,7 +51,7 @@ public class EventItem extends FeedItem {
     @Override
     public String toString()
     {
-        String output = "Date:\t\t\t" + this.eventDate;
+        String output = "Date:\t\t\t" + convertDate(this.eventDate);
         output = output + "\nTime:\t\t" + this.eventTime;
         output = output + "\nPlace:\t\t" + this.eventPlace;
         return output;

@@ -46,7 +46,25 @@ public class FeedItem {
      */
     public String toString()
     {
-        return this.timeStamp;
+        return convertDate(this.timeStamp);
+    }
+
+    /**
+     * Method to convert a digital date to an analogue date
+     * @param inDate the input digital date
+     * @return the analogue date
+     */
+    public String convertDate(String inDate)
+    {
+        String[] months = {"January", "February", "March", "April", "May", "June", "July",
+                "August", "September", "October", "November", "December"};
+
+        String[] splitDate = inDate.split("-");
+        String outDate = String.valueOf(splitDate[0]);
+        outDate = outDate + " " + months[Integer.valueOf(splitDate[1]) - 1];
+        outDate = outDate + " " + splitDate[2];
+
+        return outDate;
     }
 
     // getters and setters

@@ -1,29 +1,68 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginRight="@dimen/activity_horizontal_margin"
-    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-    android:layout_marginTop="@dimen/activity_vertical_margin"
-    android:layout_marginBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context="com.milkmatters.honoursproject.milkmatters.fragments.HomeFragment">
 
-    <RelativeLayout
+    <include layout="@layout/summary_data_grid"
+        android:id="@+id/donation_summary"/>
+
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <android.support.v7.widget.CardView
-            android:layout_alignParentTop="true"
-            android:id="@+id/newsFeedCardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16sp">
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Milk Matters is a community-based breast milk bank that pasteurises and distributes donations of screened breast milk from healthy donors to premature, ill and vulnerable babies whose own mothers cannot supply the breast milk to meet their baby’s needs. Milk Matters also facilitates the setting up of milk banks in health institutions." />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10sp">
+
+                <TextView
+                    android:id="@+id/news_item_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_alignParentTop="true"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorPrimary"/>
+
+                <TextView
+                    android:id="@+id/timestamp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/news_item_title"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/timestamp"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:layout_marginBottom="5dp"/>
+
+                <TextView
+                    android:id="@+id/hyperlink"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/content"
+                    android:clickable="true"
+                    android:autoLink="web"
+                    android:layout_marginBottom="5dp"/>
+
+            </RelativeLayout>
 
         </android.support.v7.widget.CardView>
-    </RelativeLayout>
 
-</FrameLayout>
+    </LinearLayout>
+
+</LinearLayout>

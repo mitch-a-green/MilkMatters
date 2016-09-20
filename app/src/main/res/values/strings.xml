@@ -30,6 +30,10 @@
     <!-- Depot locator strings -->
     <string name="find_nearest_depot">Find Your Nearest Depot</string>
 
+    <!-- Donation tracker strings -->
+    <string name="ml_expressed">You have donated</string>
+    <string name="babies_fed">You have fed</string>
+
     <!-- News feed strings -->
     <string name="show_more">--- Show More ---</string>
 

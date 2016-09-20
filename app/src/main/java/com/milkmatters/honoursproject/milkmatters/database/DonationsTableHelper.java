@@ -157,6 +157,76 @@ public class DonationsTableHelper extends DatabaseHelper
     }
 
     /**
+     * Get the total of all donations that have been logged
+     *
+     * @return the total of all donations that have been logged
+     */
+    public int getTotalDonations() {
+        int total = 0;
+
+        String selectQuery = "SELECT SUM(" + KEY_QUANTITY + ") AS total FROM " + TABLE_DONATIONS;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        // getting the total
+        if (c.moveToFirst()) {
+            do {
+                total = c.getInt(c.getColumnIndex("total"));
+
+            } while (c.moveToNext());
+        }
+
+        return total;
+    }
+
+    /**
+     * Get all the donations grouped by date.
+     * Each date corresponds to a list of donations.
+     * The first item is the total donation for that date.
+     * All subsequent items are individual donations for that date.
+     * @return a list of lists of donations.
+     */
+    public ArrayList<ArrayList<Donation>> getDonationsGroupedByDate() {
+        ArrayList<ArrayList<Donation>> allDonations =
+                new ArrayList<ArrayList<Donation>>();
+        String previousDate = "";
+        int counter = 0;
+
+        String selectQuery = "SELECT * FROM " + TABLE_DONATIONS + " ORDER BY " + KEY_DATE + " DESC";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        // loop through the results and generate the output list
+        if (c.moveToFirst()) {
+            do {
+                String date = c.getString(c.getColumnIndex(KEY_DATE));
+                int quantity = c.getInt(c.getColumnIndex(KEY_QUANTITY));
+                Donation donation = new Donation(date, quantity);
+                Donation donationCopy = new Donation(date, quantity);
+                if ((previousDate.equals("")) || previousDate.equals(null)) {
+                    allDonations.add(new ArrayList<Donation>());
+                    allDonations.get(counter).add(donationCopy);
+                }
+                else if (date.equals(previousDate))
+                    allDonations.get(counter).get(0).increaseDonation(quantity);
+                else
+                {
+                    counter++;
+                    allDonations.add(new ArrayList<Donation>());
+                    allDonations.get(counter).add(donationCopy);
+                }
+                allDonations.get(counter).add(donation);
+                previousDate = date;
+
+            } while (c.moveToNext());
+        }
+
+        return allDonations;
+    }
+
+    /**
      * Update a donation
      *
      * @param donation the donation to update
