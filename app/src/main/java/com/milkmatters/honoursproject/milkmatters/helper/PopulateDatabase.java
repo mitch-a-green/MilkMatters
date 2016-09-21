@@ -36,22 +36,64 @@ public class PopulateDatabase {
         location1.setLatitude(-33.949444);
         location1.setLongitude(18.475001);
         Location location2 = new Location("");
-        location2.setLatitude(-33.9539518);
-        location2.setLongitude(18.48858960000007);
+        location2.setLatitude(-34.07443000000001);
+        location2.setLongitude(18.874040000000036);
         Location location3 = new Location("");
-        location3.setLatitude(-33.9857949);
-        location3.setLongitude(18.46715089999998);
-        Depot depot1 = new Depot("Milk Matters Headquarters", "08:00 - 16:00",
+        location3.setLatitude(-34.08094);
+        location3.setLongitude(18.844839999999976);
+        Location location4 = new Location("");
+        location4.setLatitude(-33.8773638);
+        location4.setLongitude(18.57691180000006);
+        Location location5 = new Location("");
+        location5.setLatitude(-33.9746808);
+        location5.setLongitude(18.506525199999942);
+        Location location6 = new Location("");
+        location6.setLatitude(-33.943348);
+        location6.setLongitude(18.859915900000033);
+        Location location7 = new Location("");
+        location7.setLatitude(-33.901919);
+        location7.setLongitude(18.39977399999998);
+        Location location8 = new Location("");
+        location8.setLatitude(-33.8584538);
+        location8.setLongitude(18.68158649999998);
+        Location location9 = new Location("");
+        location9.setLatitude(-33.9138399);
+        location9.setLongitude(18.589034800000036);
+        Depot depot1 = new Depot("Milk Matters Headquarters", "08:00 - 16:00 Mon - Fri",
                 "Jenny Wright", "021 555 7891", "", location1);
-        Depot depot2 = new Depot("Red Cross Children's Hospital - Medical Clinic",
-                "08:00 - 16:00", "Susan Malherbe",
-                "021 333 2211", "", location2);
-        Depot depot3 = new Depot("Life Kingsbury Hospital - Maternity Ward & Baby Clinic",
-                "08:00 - 16:00", "Tim Jennings",
-                "021 111 2198", "", location3);
+        Depot depot2 = new Depot("Somerset West",
+                "Available any time", "Irene Bourquin",
+                "021 852 3040 / 082 897 0377", "22 Dromedaris Rd, Somerset West", location2);
+        Depot depot3 = new Depot("The Wellness Pod",
+                "09:00 - 16:00 Mon to Fri", "Julia",
+                "none", "32 Bright Street, Somerset West", location3);
+        Depot depot4 = new Depot("Panorama Breastfeeding Clinic",
+                "08:00 Mon to Fri (No consultation appointment necessary)", "Anelle",
+                "021 939 9720 / 083 703 7711", "14 Dorp Street, Panorama", location4);
+        Depot depot5 = new Depot("Al-Nisa Maternity Home",
+                "07:30 – 17:00 Mon – Fri & 09:00 – 13:00 Sat", "Cathy or Amina",
+                "021 696 8892", "7 Rokeby Road, Crawford / Rondebosch East", location5);
+        Depot depot6 = new Depot("Stellenbosch Breastfeeding Clinic",
+                "09:00 to 17:00 Mon - Fri", "Erica Neser",
+                "083 292 5252", "10 Ackermann Street, Stellenbosch", location6);
+        Depot depot7 = new Depot("Thula Baby Centre",
+                "09:00 - 12:00 Mon to Fri", "Heather",
+                "021 434 2614", "South Seas, 129 Beach Rd, Mouille Point", location7);
+        Depot depot8 = new Depot("Clicks, Glengarry Village Centre",
+                "09:00 – 17:00 Mon to Fri", "Sr Lizbe Egnelbrecht ",
+                "021 981 2160", "De Bron Road, Brackenfell", location8);
+        Depot depot9 = new Depot("Kids Medi Care",
+                "None listed", "Dr Rahmat Bagus (MBChB)",
+                "021 933 7004 / 082 826 4600", "18 Phillips Street, Parow Valley", location9);
         depotsTableHelper.createDepot(depot1);
         depotsTableHelper.createDepot(depot2);
         depotsTableHelper.createDepot(depot3);
+        depotsTableHelper.createDepot(depot4);
+        depotsTableHelper.createDepot(depot5);
+        depotsTableHelper.createDepot(depot6);
+        depotsTableHelper.createDepot(depot7);
+        depotsTableHelper.createDepot(depot8);
+        depotsTableHelper.createDepot(depot9);
         depotsTableHelper.closeDB();
     }
 
