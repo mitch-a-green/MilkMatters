@@ -107,6 +107,15 @@ public class DonationTrackingFragment extends Fragment {
             }
         });
 
+        CardView babiesCardView = (CardView) this.view.findViewById(R.id.babies_card_view);
+        babiesCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DonationGraphActivity.class);
+                startActivity(intent);
+            }
+        });
+
         return this.view;
     }
 
