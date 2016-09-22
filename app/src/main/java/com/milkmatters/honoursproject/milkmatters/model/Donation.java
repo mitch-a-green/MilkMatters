@@ -102,4 +102,21 @@ public class Donation {
     {
         this.quantity = quantity + this.quantity;
     }
+
+    /**
+     * Method to get an analogue representation of the date
+     * @return the analogue date
+     */
+    public String getAnalogueDate()
+    {
+        String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul",
+                "Aug", "Sep", "Oct", "Nov", "Dec"};
+
+        String[] splitDate = this.date.split("-");
+        String outDate = String.valueOf(splitDate[0]);
+        outDate = outDate + " " + months[Integer.valueOf(splitDate[1]) - 1];
+        outDate = outDate + " " + splitDate[2].substring(2);
+
+        return outDate;
+    }
 }

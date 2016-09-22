@@ -104,7 +104,14 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (!fragment.getTag().equals(getString(R.string.home_fragment)))
+            {
+                fragment = new HomeFragment();
+                String title = getString(R.string.app_name);
+                switchFragment(title);
+            }
+            else
+                super.onBackPressed();
         }
     }
 

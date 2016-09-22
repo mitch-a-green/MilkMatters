@@ -15,7 +15,8 @@
         android:id="@+id/ml_card_view"
         android:layout_gravity="fill"
         android:layout_columnWeight="1"
-        android:layout_marginRight="5sp">
+        android:layout_marginRight="5sp"
+        android:clickable="true">
 
         <RelativeLayout
             android:id="@+id/ml_relative_layout"

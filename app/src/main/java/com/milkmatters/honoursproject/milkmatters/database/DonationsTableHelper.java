@@ -157,6 +157,37 @@ public class DonationsTableHelper extends DatabaseHelper
     }
 
     /**
+     * Get all dates on which donations were made
+     * and the total quantities donated on those days/
+     *
+     * @return a list of donations
+     */
+    public ArrayList<Donation> getAllDatesAndTotals() {
+        ArrayList<Donation> donations = new ArrayList<Donation>();
+
+        String selectQuery = "SELECT " + KEY_DATE + " AS date, SUM(" +
+                KEY_QUANTITY + ") AS total FROM " + TABLE_DONATIONS + " GROUP BY " +
+                KEY_DATE + " ORDER BY " + KEY_DATE + " ASC";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        // looping through all the rows and adding to the list
+        if (c.moveToFirst()) {
+            do {
+                String dateAdded = c.getString(c.getColumnIndex(KEY_DATE));
+                int quantity = c.getInt(c.getColumnIndex("total"));
+                Donation donation = new Donation(dateAdded, -1, quantity);
+
+                // adding to the donations list
+                donations.add(donation);
+            } while (c.moveToNext());
+        }
+
+        return donations;
+    }
+
+    /**
      * Get the total of all donations that have been logged
      *
      * @return the total of all donations that have been logged

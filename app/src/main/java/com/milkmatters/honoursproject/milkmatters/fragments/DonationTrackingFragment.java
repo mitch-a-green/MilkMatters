@@ -2,6 +2,7 @@ package com.milkmatters.honoursproject.milkmatters.fragments;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -18,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.milkmatters.honoursproject.milkmatters.R;
+import com.milkmatters.honoursproject.milkmatters.activities.DonationGraphActivity;
 import com.milkmatters.honoursproject.milkmatters.adapters.DonationsAdapter;
 import com.milkmatters.honoursproject.milkmatters.adapters.FeedAdapter;
 import com.milkmatters.honoursproject.milkmatters.database.DonationsTableHelper;
@@ -95,6 +97,15 @@ public class DonationTrackingFragment extends Fragment {
         // specify an adapter
         mAdapter = new DonationsAdapter(this.donations);
         mRecyclerView.setAdapter(mAdapter);
+
+        CardView mlCardView = (CardView) this.view.findViewById(R.id.ml_card_view);
+        mlCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DonationGraphActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return this.view;
     }
