@@ -41,13 +41,14 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/feed_item_profile_name"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimary"/>
 
                 <TextView
                     android:id="@+id/timestamp"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/timestamp"
+                    android:textColor="@color/colorLightPink"
                     android:textSize="@dimen/feed_item_timestamp" />
             </LinearLayout>
         </LinearLayout>
@@ -69,7 +70,7 @@
             android:paddingBottom="10dp"
             android:paddingLeft="@dimen/feed_item_status_pad_left_right"
             android:paddingRight="@dimen/feed_item_status_pad_left_right"
-            android:textColorLink="@color/link" />
+            android:textColorLink="@color/colorPrimary" />
 
         <com.milkmatters.honoursproject.milkmatters.views.FeedImageView
             android:id="@+id/feedImage1"

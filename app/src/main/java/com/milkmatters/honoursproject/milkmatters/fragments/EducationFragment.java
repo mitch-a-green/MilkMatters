@@ -69,7 +69,7 @@ public class EducationFragment extends Fragment {
                 switch (position){
 
                     case 0:
-                        intent.putExtra("URL", "http://www.json-generator.com/api/json/get/bZAjpGamzS?indent=2");
+                        intent.putExtra("URL", "http://www.json-generator.com/api/json/get/cpnlgqhszm?indent=2");
                         intent.putExtra("title", "Breastfeeding");
                         break;
                     case 1:
