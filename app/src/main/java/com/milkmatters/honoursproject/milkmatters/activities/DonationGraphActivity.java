@@ -5,9 +5,14 @@ import android.graphics.DashPathEffect;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.GridLayout;
 import android.widget.TabHost;
 
@@ -23,8 +28,10 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.Utils;
 import com.milkmatters.honoursproject.milkmatters.R;
+import com.milkmatters.honoursproject.milkmatters.adapters.PagerAdapter;
 import com.milkmatters.honoursproject.milkmatters.database.DonationsTableHelper;
 import com.milkmatters.honoursproject.milkmatters.model.Donation;
+import com.milkmatters.honoursproject.milkmatters.views.CustomViewPager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,8 +39,11 @@ import java.util.Calendar;
 /**
  * Activity to display graphs depicting the ml donated and babies fed
  */
-public class DonationGraphActivity extends AppCompatActivity {
-    private ArrayList<Donation> donations;
+public class DonationGraphActivity extends AppCompatActivity
+        implements TabLayout.OnTabSelectedListener
+{
+    private TabLayout tabLayout;
+    private CustomViewPager viewPager;
 
     /**
      * Overridden onCreate method
@@ -44,54 +54,50 @@ public class DonationGraphActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donation_graph);
 
+        //Adding toolbar to the activity
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        //Initializing the tablayout
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+
         getSupportActionBar().setTitle(getString(R.string.activity_donation_graph));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        LineChart lineChart = (LineChart) findViewById(R.id.line_chart);
+        //Initializing the tablayout
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 
-        // get the screen size
-        Point size = new Point();
-        this.getWindowManager().getDefaultDisplay().getSize(size);
-        int screenHeight = size.y;
-        int halfScreenHeight = (int)(screenHeight *0.5);
+        //Adding the tabs using addTab() method
+        tabLayout.addTab(tabLayout.newTab().setText("ML Donated"));
+        tabLayout.addTab(tabLayout.newTab().setText("Babies Fed"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        DonationsTableHelper donationsTableHelper =
-                new DonationsTableHelper(this.getApplicationContext());
-        donations = donationsTableHelper.getAllDatesAndTotals();
-        donationsTableHelper.closeDB();
+        //Initializing viewPager
+        viewPager = (CustomViewPager) findViewById(R.id.pager);
+        viewPager.setPagingEnabled(false);
 
-        float total = 0;
-        ArrayList<Entry> entries = new ArrayList<>();
-        ArrayList<String> labels = new ArrayList<String>();
-        for  (int i = 0; i < donations.size(); i++)
-        {
-            total += donations.get(i).getQuantity();
-            entries.add(new Entry(total, i));
-            labels.add(donations.get(i).getAnalogueDate());
-        }
+        //Creating our pager adapter
+        PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
 
-        LineDataSet dataset = new LineDataSet(entries, "# of Calls");
-        dataset.setColor(Color.parseColor("#FFDB0963"));
-        dataset.setCircleColor(Color.parseColor("#FFDB0963"));
-        dataset.setFillColor(Color.parseColor("#eeb8d4"));
-        dataset.setLineWidth(2f);
-        dataset.setCircleRadius(4f);
+        //Adding adapter to pager
+        viewPager.setAdapter(adapter);
 
-        LineData data = new LineData(labels, dataset);
-        dataset.setDrawCubic(true);
-        dataset.setDrawFilled(true);
+        //Adding onTabSelectedListener to swipe views
+        tabLayout.setOnTabSelectedListener(this);
+    }
 
-        //lineChart.getAxisRight().setEnabled(false);
-        lineChart.getXAxis().setLabelsToSkip(0);
-        lineChart.getXAxis().setLabelRotationAngle(-90f);
-        lineChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
-        lineChart.getAxisLeft().setDrawGridLines(false);
-        lineChart.getXAxis().setDrawGridLines(false);
-        lineChart.setData(data);
-        lineChart.animateY(5000);
-        lineChart.setVisibleXRangeMaximum(7);
-        lineChart.moveViewToX(5);
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+        viewPager.setCurrentItem(tab.getPosition());
+    }
 
-        lineChart.setDescription("");    // Hide the description
-        lineChart.getLegend().setEnabled(false);
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
     }
 }
