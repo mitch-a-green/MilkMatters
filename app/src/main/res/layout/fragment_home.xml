@@ -1,68 +1,85 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:scrollbars="vertical"
+    android:background="@color/feed_bg"
     tools:context="com.milkmatters.honoursproject.milkmatters.fragments.HomeFragment">
 
-    <include layout="@layout/summary_data_grid"
-        android:id="@+id/donation_summary"/>
-
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <android.support.v7.widget.CardView
+        <include layout="@layout/summary_data_grid"
+            android:id="@+id/donation_summary"/>
+
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin">
+            android:layout_height="wrap_content">
 
-            <RelativeLayout
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10sp">
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin">
 
-                <TextView
-                    android:id="@+id/news_item_title"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_alignParentTop="true"
-                    android:textSize="16sp"
-                    android:textColor="@color/colorPrimary"/>
+                    android:layout_margin="10sp">
 
-                <TextView
-                    android:id="@+id/timestamp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/news_item_title"
-                    android:layout_marginBottom="10dp"
-                    android:textColor="@color/black"/>
+                    <TextView
+                        android:id="@+id/news_item_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_alignParentTop="true"
+                        android:textSize="16sp"
+                        android:textColor="@color/colorPrimary"/>
 
-                <TextView
-                    android:id="@+id/content"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/timestamp"
-                    android:maxLines="2"
-                    android:ellipsize="end"
-                    android:layout_marginBottom="5dp"/>
+                    <TextView
+                        android:id="@+id/timestamp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/news_item_title"
+                        android:layout_marginBottom="10dp"
+                        android:textColor="@color/black"/>
 
-                <TextView
-                    android:id="@+id/hyperlink"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/content"
-                    android:clickable="true"
-                    android:autoLink="web"
-                    android:layout_marginBottom="5dp"/>
+                    <TextView
+                        android:id="@+id/content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/timestamp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        android:layout_marginBottom="5dp"/>
 
-            </RelativeLayout>
+                    <TextView
+                        android:id="@+id/hyperlink"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/content"
+                        android:clickable="true"
+                        android:autoLink="web"
+                        android:layout_marginBottom="5dp"/>
 
-        </android.support.v7.widget.CardView>
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>

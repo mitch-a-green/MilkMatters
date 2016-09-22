@@ -11,15 +11,32 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.Cache;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.milkmatters.honoursproject.milkmatters.R;
 import com.milkmatters.honoursproject.milkmatters.activities.DonationGraphActivity;
+import com.milkmatters.honoursproject.milkmatters.activities.MainArticlesActivity;
+import com.milkmatters.honoursproject.milkmatters.adapters.FeedListAdapter;
+import com.milkmatters.honoursproject.milkmatters.controller.AppController;
 import com.milkmatters.honoursproject.milkmatters.database.DonationsTableHelper;
 import com.milkmatters.honoursproject.milkmatters.database.FeedTableHelper;
+import com.milkmatters.honoursproject.milkmatters.model.EducationFeedItem;
 import com.milkmatters.honoursproject.milkmatters.model.FeedItem;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,6 +48,12 @@ public class HomeFragment extends Fragment {
     private View view;
     private ArrayList<FeedItem> feedItems;
     private final int AMOUNT_CONSUMED_DAILY = 50;
+    private static final String TAG = MainArticlesActivity.class.getSimpleName();
+    private ListView listView;
+    private FeedListAdapter listAdapter;
+    private List<EducationFeedItem> educationFeedItems;
+    // private String URL_FEED = "http://api.androidhive.info/feed/feed.json";
+    private String URL_FEED = "http://www.json-generator.com/api/json/get/cpnlgqhszm?indent=2";
 
     public HomeFragment() {
         // Required empty public constructor
@@ -121,6 +144,59 @@ public class HomeFragment extends Fragment {
         contentTextView.setText(feedItem.getContent());
         hyperlinkTextView.setText(feedItem.getHyperlink());
         timestampTextView.setText(feedItem.toString());
+
+        listView = (ListView) this.view.findViewById(R.id.list);
+
+        educationFeedItems = new ArrayList<EducationFeedItem>();
+
+        listAdapter = new FeedListAdapter(this.getActivity(), educationFeedItems);
+        listView.setAdapter(listAdapter);
+
+        // These two lines not needed,
+        // just to get the look of facebook (changing background color & hiding the icon)
+        //getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3b5998")));
+        //getActionBar().setIcon(
+        //        new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+
+        // We first check for cached request
+        Cache cache = AppController.getInstance().getRequestQueue().getCache();
+        Cache.Entry entry = cache.get(URL_FEED);
+        if (entry != null) {
+            // fetch the data from cache
+            try {
+                String data = new String(entry.data, "UTF-8");
+                try {
+                    parseJsonFeed(new JSONObject(data));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            // making fresh volley request and getting json
+            JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.GET,
+                    URL_FEED, null, new Response.Listener<JSONObject>() {
+
+                @Override
+                public void onResponse(JSONObject response) {
+                    VolleyLog.d(TAG, "Response: " + response.toString());
+                    if (response != null) {
+                        parseJsonFeed(response);
+                    }
+                }
+            }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    VolleyLog.d(TAG, "Error: " + error.getMessage());
+                }
+            });
+
+            // Adding request to volley request queue
+            AppController.getInstance().addToRequestQueue(jsonReq);
+        }
     }
 
     /**
@@ -146,5 +222,42 @@ public class HomeFragment extends Fragment {
         gridLayout.setMinimumWidth(screenWidth);
         gridLayout.getChildAt(0).setMinimumWidth(halfScreenWidth/2);
         gridLayout.getChildAt(1).setMinimumWidth(halfScreenWidth/2);
+    }
+
+    /**
+     * Parsing json reponse and passing the data to feed view list adapter
+     * */
+    private void parseJsonFeed(JSONObject response) {
+        try {
+            JSONArray feedArray = response.getJSONArray("feed");
+
+            for (int i = 0; i <= 0; i++) {
+                JSONObject feedObj = (JSONObject) feedArray.get(i);
+
+                EducationFeedItem item = new EducationFeedItem();
+                item.setId(feedObj.getInt("id"));
+                item.setName(feedObj.getString("name"));
+
+                // Image might be null sometimes
+                String image = feedObj.isNull("image") ? null : feedObj
+                        .getString("image");
+                item.setImge(image);
+                item.setStatus(feedObj.getString("status"));
+                item.setProfilePic(feedObj.getString("profilePic"));
+                item.setTimeStamp(feedObj.getString("timeStamp"));
+
+                // url might be null sometimes
+                String feedUrl = feedObj.isNull("url") ? null : feedObj
+                        .getString("url");
+                item.setUrl(feedUrl);
+
+                educationFeedItems.add(item);
+            }
+
+            // notify data changes to list adapater
+            listAdapter.notifyDataSetChanged();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }
