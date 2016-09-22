@@ -1,9 +1,12 @@
 package com.milkmatters.honoursproject.milkmatters.fragments;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,7 @@ import android.widget.GridLayout;
 import android.widget.TextView;
 
 import com.milkmatters.honoursproject.milkmatters.R;
+import com.milkmatters.honoursproject.milkmatters.activities.DonationGraphActivity;
 import com.milkmatters.honoursproject.milkmatters.database.DonationsTableHelper;
 import com.milkmatters.honoursproject.milkmatters.database.FeedTableHelper;
 import com.milkmatters.honoursproject.milkmatters.model.FeedItem;
@@ -23,6 +27,7 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
+    private Context context;
     private View view;
     private ArrayList<FeedItem> feedItems;
     private final int AMOUNT_CONSUMED_DAILY = 50;
@@ -44,6 +49,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.context = getContext();
     }
 
     @Override
@@ -53,6 +59,15 @@ public class HomeFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
         showFAB();
+
+        CardView mlCardView = (CardView) this.view.findViewById(R.id.ml_card_view);
+        mlCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DonationGraphActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }
@@ -82,6 +97,7 @@ public class HomeFragment extends Fragment {
     public void onResume()
     {
         super.onResume();
+        this.context = getContext();
         DonationsTableHelper donationsTableHelper = new DonationsTableHelper(this.getContext());
         int totalDonated = donationsTableHelper.getTotalDonations();
         donationsTableHelper.closeDB();
