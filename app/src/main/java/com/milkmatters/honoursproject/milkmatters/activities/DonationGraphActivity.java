@@ -53,6 +53,8 @@ public class DonationGraphActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donation_graph);
+        Bundle extras = this.getIntent().getExtras();
+        String selected = extras.getString("graph", "ml");
 
         //Adding toolbar to the activity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -68,8 +70,14 @@ public class DonationGraphActivity extends AppCompatActivity
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 
         //Adding the tabs using addTab() method
-        tabLayout.addTab(tabLayout.newTab().setText("ML Donated"));
-        tabLayout.addTab(tabLayout.newTab().setText("Babies Fed"));
+        if (selected.equals("babies")) {
+            tabLayout.addTab(tabLayout.newTab().setText("ML Donated"), false);
+            tabLayout.addTab(tabLayout.newTab().setText("Babies Fed"), true);
+        }
+        else {
+            tabLayout.addTab(tabLayout.newTab().setText("ML Donated"));
+            tabLayout.addTab(tabLayout.newTab().setText("Babies Fed"));
+        }
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         //Initializing viewPager
@@ -84,6 +92,10 @@ public class DonationGraphActivity extends AppCompatActivity
 
         //Adding onTabSelectedListener to swipe views
         tabLayout.setOnTabSelectedListener(this);
+
+        if (selected.equals("babies")) {
+            viewPager.setCurrentItem(1);
+        }
     }
 
     @Override

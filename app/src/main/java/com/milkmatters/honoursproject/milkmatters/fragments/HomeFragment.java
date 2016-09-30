@@ -88,6 +88,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, DonationGraphActivity.class);
+                intent.putExtra("graph", "ml");
                 startActivity(intent);
             }
         });
@@ -97,6 +98,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, DonationGraphActivity.class);
+                intent.putExtra("graph", "babies");
                 startActivity(intent);
             }
         });
