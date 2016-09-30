@@ -69,35 +69,35 @@ public class EducationFragment extends Fragment {
                 switch (position){
 
                     case 0:
-                        intent.putExtra("URL", "http://www.json-generator.com/api/json/get/cpnlgqhszm?indent=2");
+                        intent.putExtra("URL", "http://www.json-generator.com/api/json/get/bUPxrJWhpe?indent=2");
                         intent.putExtra("title", "Breastfeeding");
                         break;
                     case 1:
-                        intent.putExtra("URL", "http://www.json-generator.com/api/json/get/bZAjpGamzS?indent=2");
+                        intent.putExtra("URL", "http://www.json-generator.com/api/json/get/cqgpmolcpu?indent=2");
                         intent.putExtra("title", "Donation");
                         break;
                     case 2:
-                        intent.putExtra("URL", "http://www.json-generator.com/api/json/get/bZAjpGamzS?indent=2");
+                        intent.putExtra("URL", "http://www.json-generator.com/api/json/get/clCfAcBGEO?indent=2");
                         intent.putExtra("title", "Increase Milk Supply");
                         break;
                     case 3:
-                        intent.putExtra("URL", "http://www.json-generator.com/api/json/get/bZAjpGamzS?indent=2");
+                        intent.putExtra("URL", "http://www.json-generator.com/api/json/get/bUEDNpSoXS?indent=2");
                         intent.putExtra("title", "Latching");
                         break;
                     case 4:
-                        intent.putExtra("URL", "http://www.json-generator.com/api/json/get/bZAjpGamzS?indent=2");
+                        intent.putExtra("URL", "http://www.json-generator.com/api/json/get/cerpkVDwPm?indent=2");
                         intent.putExtra("title", "Nutrition");
                         break;
                     case 5:
-                        intent.putExtra("URL", "http://www.json-generator.com/api/json/get/bZAjpGamzS?indent=2");
+                        intent.putExtra("URL", "http://www.json-generator.com/api/json/get/cegBHHXLoy?indent=2");
                         intent.putExtra("title", "Pumping");
                         break;
                     case 6:
-                        intent.putExtra("URL", "http://www.json-generator.com/api/json/get/bZAjpGamzS?indent=2");
+                        intent.putExtra("URL", "http://www.json-generator.com/api/json/get/cedwXOYrWW?indent=2");
                         intent.putExtra("title", "Mastitis");
                         break;
                     case 7:
-                        intent.putExtra("URL", "http://www.json-generator.com/api/json/get/bZAjpGamzS?indent=2");
+                        intent.putExtra("URL", "http://www.json-generator.com/api/json/get/cqmgBWepcO?indent=2");
                         intent.putExtra("title", "Parenting");
                         break;
                 }
