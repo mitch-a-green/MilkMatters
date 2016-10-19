@@ -30,6 +30,7 @@ import com.milkmatters.honoursproject.milkmatters.database.DepotsTableHelper;
 import com.milkmatters.honoursproject.milkmatters.database.DonationsTableHelper;
 import com.milkmatters.honoursproject.milkmatters.database.FeedTableHelper;
 import com.milkmatters.honoursproject.milkmatters.dialogs.LogDonationDialogFragment;
+import com.milkmatters.honoursproject.milkmatters.dialogs.ShowMessageDialogFragment;
 import com.milkmatters.honoursproject.milkmatters.fragments.AboutFragment;
 import com.milkmatters.honoursproject.milkmatters.fragments.BecomeDonorFragment;
 import com.milkmatters.honoursproject.milkmatters.fragments.DepotLocatorFragment;
@@ -53,6 +54,7 @@ import com.milkmatters.honoursproject.milkmatters.model.Question;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         LogDonationDialogFragment.NoticeDialogListener,
+        ShowMessageDialogFragment.NoticeDialogListener,
         AboutFragment.OnFragmentInteractionListener,
         BecomeDonorFragment.OnFormCompleteListener{
     private Fragment fragment;
@@ -78,7 +80,14 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showLogDonationDialog();
+                // if the user is logging a donation for the first time
+                if (prefs.getBoolean("first_log", true)) {
+                    prefs.edit().putBoolean("first_log", false).commit();
+                    showDisclaimer();
+                }
+                else {
+                    showLogDonationDialog();
+                }
             }
         });
 
@@ -142,11 +151,16 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_log_donation) {
-            showLogDonationDialog();
+            // if the user is logging a donation for the first time
+            if (prefs.getBoolean("first_log", true)) {
+                prefs.edit().putBoolean("first_log", false).commit();
+                showDisclaimer();
+            }
+            else {
+                showLogDonationDialog();
+            }
             return true;
         }
-        else if (id == R.id.action_settings)
-            return true;
 
         return super.onOptionsItemSelected(item);
     }
@@ -227,6 +241,14 @@ public class MainActivity extends AppCompatActivity
             // populate the database with news feed items, depots and questions for the quiz
             PopulateDatabase populateDatabase = new PopulateDatabase(this.getApplicationContext());
             prefs.edit().putBoolean("first_run", false).commit();
+            DialogFragment dialog = new ShowMessageDialogFragment();
+            Bundle args = new Bundle();
+            args.putString("title", "Welcome to the Milk Matters Mobile Application!");
+            args.putString("message", "Did you know that 50ml of breast milk is sufficient to sustain a 1kg premature baby for 24 hours?\n\nWe use this statistic in the app's Donation Tracker to calculate approximately how many babies you have fed for a day.");
+            args.putString("button", "OK, Got it!");
+            args.putBoolean("logDonation", false);
+            dialog.setArguments(args);
+            dialog.show(getSupportFragmentManager(), "welcome");
         }
 
         fragment.onResume();
@@ -242,6 +264,21 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
+     * Method to show the disclaimer in a dialog
+     */
+    public void showDisclaimer()
+    {
+        DialogFragment dialog = new ShowMessageDialogFragment();
+        Bundle args = new Bundle();
+        args.putString("title", "Disclaimer");
+        args.putString("message", "The information generated in, and stored by, this application is solely for your own use.\n\nWe will not automatically send any of your information to Milk Matters. As such, records of the breast milk you have donated according to this app may differ from Milk Matters' official records.");
+        args.putString("button", "OK, Got it!");
+        args.putBoolean("logDonation", true);
+        dialog.setArguments(args);
+        dialog.show(getSupportFragmentManager(), "disclaimer");
+    }
+
+    /**
      * Method to show the log donation dialog
      */
     public void showLogDonationDialog()
@@ -254,6 +291,17 @@ public class MainActivity extends AppCompatActivity
         b.putString("negativeButton", "Cancel");
         newFragment.setArguments(b);
         newFragment.show(getSupportFragmentManager(), "confirmRename");
+    }
+
+    /**
+     * Overridden onDialogClose method for the show message dialog
+     * If the dialog was used to display the disclaimer, then open the log donation dialog.
+     * @param logDonation a boolean indicating whether the dialog was used to display the disclaimer
+     */
+    @Override
+    public void onDialogClose(boolean logDonation) {
+        if (logDonation)
+            showLogDonationDialog();
     }
 
     /**
