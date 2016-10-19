@@ -22,14 +22,24 @@ public class GridImageAdapter extends BaseAdapter
     {
         inflater = LayoutInflater.from(context);
 
-        items.add(new Item("Breastfeeding", R.drawable.breastfeeding));
+        /*items.add(new Item("Breastfeeding", R.drawable.breastfeeding));
         items.add(new Item("Donation", R.drawable.donation));
         items.add(new Item("Increase Milk Supply", R.drawable.increase_milk_supply));
         items.add(new Item("Latching", R.drawable.latching));
         items.add(new Item("Nutrition", R.drawable.nutrition));
         items.add(new Item("Pumping", R.drawable.pumping));
         items.add(new Item("Mastitis", R.drawable.mastitis));
+        items.add(new Item("Parenting", R.drawable.parenting));*/
+
+        items.add(new Item("Breastfeeding", R.drawable.breastfeeding_new));
+        items.add(new Item("Donation", R.drawable.donation));
+        items.add(new Item("Increase Milk Supply", R.drawable.increase_milk_new));
+        items.add(new Item("Latching", R.drawable.latching_new));
+        items.add(new Item("Nutrition", R.drawable.nutrition_new));
+        items.add(new Item("Pumping", R.drawable.pumping_new));
+        items.add(new Item("Mastitis", R.drawable.mastitis_new));
         items.add(new Item("Parenting", R.drawable.parenting));
+        items.add(new Item("Suggest an article/website", R.drawable.article));
     }
 
     @Override

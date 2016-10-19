@@ -43,6 +43,7 @@
     <string name="office">0216595599</string>
     <string name="cell">0828958004</string>
     <string name="email_address">info@milkmatters.org</string>
+    <string name="mm_link"><a href="http://milkmatters.org/">http://milkmatters.org/</a></string>
 
     <!-- Become a donor strings -->
     <string name="str_next">Next Question</string>

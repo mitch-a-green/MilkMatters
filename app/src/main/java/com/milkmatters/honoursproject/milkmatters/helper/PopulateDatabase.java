@@ -111,7 +111,7 @@ public class PopulateDatabase {
                 "\n" +
                 "Newborns are hardwired to breastfeed, and the breast crawl is the practice of letting them use those instincts to slowly inch their way to their mother’s nipple to nurse for the very first time. Immediately after delivery, the baby is placed on the mother’s abdomen and given time to scoot up to her breasts, sniffing along the way. (BreastCrawl.org says says it generally takes between 30 and 60 minutes, after which babies who haven’t arrived at the breast yet may need a little help.) Proponents say that giving babies that first hour of life to make the journey helps promote early initiation of breastfeeding ― which has clear benefits ― and eases moms and babies through one of life’s biggest transitions. \n" +
                 "\n" +
-                "“It’s not something I’d heard about before,” says Jessica, who went to a practice with two midwives and two OB-GYNs ― all of whom were supportive of the idea. “When I read about it, I thought it sounded magical.” \n" +
+                "“It’s not something I’nutrition_new heard about before,” says Jessica, who went to a practice with two midwives and two OB-GYNs ― all of whom were supportive of the idea. “When I read about it, I thought it sounded magical.” \n" +
                 "\n" +
                 "Fortunately, Jessica and her husband hired Austin-based breastfeeding and birth photographer Leilani Rogers to document the birth, and she captured the crawl inch-by-inch. “To witness the connection baby made with mom over the span of that 48 minutes was fascinating,” Rogers said. “She didn’t fuss, just slowly but surely made her way to the nipple and latched on once she was in just the right position.”\n" +
                 "\n" +
@@ -209,7 +209,7 @@ public class PopulateDatabase {
                 new BecomeDonorTableHelper(this.context);
         Question q1=new Question("Would you be willing to complete a donor screening form?","Yes", "As long as it isn't too long", "No", "No");
         becomeDonorTableHelper.addQuestion(q1);
-        Question q2=new Question("Would you be willing to do a HIV and Hepatitis B blood test?", "Yes", "As long as its free", "No", "No");
+        Question q2=new Question("Would you be willing to do a HIV and Hepatitis B blood test?", "Yes", "As long as it is for free", "No", "No");
         becomeDonorTableHelper.addQuestion(q2);
         Question q3=new Question("Are you able to collect sterile jars for milk from Milk Matters?","Yes", "Depends on how often","No","No");
         becomeDonorTableHelper.addQuestion(q3);

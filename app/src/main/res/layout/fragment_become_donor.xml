@@ -62,6 +62,6 @@
         android:layout_height="wrap_content"
         android:text="@string/str_next"
         android:textColor="#FFFFFFFF"
-        android:background="@color/colorLightPink"/>
+        android:background="@color/colorPrimary"/>
 
 </RelativeLayout>

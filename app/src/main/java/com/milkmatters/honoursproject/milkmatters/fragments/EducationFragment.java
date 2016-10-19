@@ -3,6 +3,7 @@ package com.milkmatters.honoursproject.milkmatters.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -100,8 +101,18 @@ public class EducationFragment extends Fragment {
                         intent.putExtra("URL", "http://www.json-generator.com/api/json/get/cqmgBWepcO?indent=2");
                         intent.putExtra("title", "Parenting");
                         break;
+                    case 8:
+                        Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+                        emailIntent.setData(Uri.parse("mailto:"));
+                        emailIntent.putExtra(Intent.EXTRA_EMAIL, "chelseajoyful@gmail.com");
+                        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Article Suggestion");
+                        emailIntent.putExtra(Intent.EXTRA_TEXT, "Here is an article I found very interesting...");
+                        if (emailIntent.resolveActivity(getActivity().getPackageManager()) != null)
+                            startActivity(emailIntent);
+                        break;
                 }
-                startActivity(intent);
+                if (position!=8)
+                    startActivity(intent);
             }
         });
 

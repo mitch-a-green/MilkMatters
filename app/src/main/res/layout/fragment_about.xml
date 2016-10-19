@@ -40,6 +40,17 @@
                     android:layout_below="@id/about_heading"
                     android:id="@+id/about_text" />
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_margin="2sp"
+                    android:text="@string/mm_link"
+                    android:autoLink="web"
+                    android:layout_below="@id/about_text"
+                    android:id="@+id/about_mm_link" />
+
+
                 <Button
                     android:id="@+id/about_link"
                     android:layout_width="match_parent"
@@ -48,7 +59,7 @@
                     android:text="@string/about_link"
                     android:background="@color/colorPrimary"
                     android:textColor="#ffffff"
-                    android:layout_below="@id/about_text"
+                    android:layout_below="@id/about_mm_link"
                     android:layout_centerHorizontal="true"/>
 
 
@@ -101,12 +112,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/office_number"
+                            android:textStyle="italic"
                             android:clickable="true"/>
                         <TextView
                             android:id="@+id/cell_number"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/cell_number"
+                            android:textStyle="italic"
                             android:clickable="true" />
                         <TextView
                             android:layout_width="wrap_content"
@@ -117,7 +130,8 @@
                             android:id="@+id/email_address"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/email_address" />
+                            android:text="@string/email_address"
+                            android:textStyle="italic"/>
                     </LinearLayout>
 
                 </LinearLayout>

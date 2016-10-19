@@ -74,8 +74,9 @@ public class ResultFragment extends Fragment{
                     "Please get in contact with us if you are willing to make a difference.");
         }
         else {
-            t.setText("Unfortunately you are ineligible to become a donor. \n\n" +
-                    "However, please consider donating equipment or money (which can be done through myschool/myvillage).");
+            t.setText("Unfortunately you may be ineligible to become a donor because you answered 'no' to a question. \n\n" +
+                    "However, please still get in contact with us and consider donating equipment or money (which can be done through myschool/myvillage). \n\n"+
+                        "Or tell us what you answered 'no' to, and maybe we can still accommodate you");
         }
 
         // add functionality to send an automated email
@@ -90,7 +91,7 @@ public class ResultFragment extends Fragment{
                 }
                 else {
                     String message = "Hi,\n\nI took the become a donor quiz on the app. " +
-                            "Unfortunately, I answered 'no' to a question and may not be eligible to become a donor. " +
+                            "Unfortunately, I answered 'no' to a question (Insert question here) and may not be eligible to become a donor. " +
                             "However, I am " +
                             "interested in donating equipment/money and joining your mailing list...";
                     emailUs(addresses, "Helping out", message);
