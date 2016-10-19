@@ -103,7 +103,7 @@ public class DonationsTableHelper extends DatabaseHelper
         ArrayList<Donation> donations = new ArrayList<Donation>();
 
         String selectQuery = "SELECT * FROM " + TABLE_DONATIONS + " WHERE " +
-                KEY_DATE + " = ? ORDER BY " + KEY_DATE + " DESC, " + KEY_ID + " DESC";
+                KEY_DATE + " = ? ORDER BY date(" + KEY_DATE + ") DESC, " + KEY_ID + " DESC";
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, new String[]{getDate()});
@@ -135,7 +135,7 @@ public class DonationsTableHelper extends DatabaseHelper
         String endDate = getDate().substring(0, 8) + "31";
 
         String selectQuery = "SELECT * FROM " + TABLE_DONATIONS + " WHERE " +
-                KEY_DATE + " BETWEEN ? AND ? ORDER BY " + KEY_DATE + " DESC, " + KEY_ID + " DESC";
+                KEY_DATE + " BETWEEN ? AND ? ORDER BY date(" + KEY_DATE + ") DESC, " + KEY_ID + " DESC";
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, new String[]{startDate, endDate});
@@ -167,7 +167,7 @@ public class DonationsTableHelper extends DatabaseHelper
 
         String selectQuery = "SELECT " + KEY_DATE + " AS date, SUM(" +
                 KEY_QUANTITY + ") AS total FROM " + TABLE_DONATIONS + " GROUP BY " +
-                KEY_DATE + " ORDER BY " + KEY_DATE + " ASC";
+                KEY_DATE + " ORDER BY date(" + KEY_DATE + ") ASC";
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
@@ -224,7 +224,7 @@ public class DonationsTableHelper extends DatabaseHelper
         String previousDate = "";
         int counter = 0;
 
-        String selectQuery = "SELECT * FROM " + TABLE_DONATIONS + " ORDER BY " + KEY_DATE + " DESC";
+        String selectQuery = "SELECT * FROM " + TABLE_DONATIONS + " ORDER BY date(" + KEY_DATE + ") DESC";
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
