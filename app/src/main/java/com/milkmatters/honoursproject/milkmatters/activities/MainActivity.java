@@ -21,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.milkmatters.honoursproject.milkmatters.R;
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity
         fragment = new HomeFragment();
         switchFragment(getString(R.string.app_name));
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        Button fab = (Button) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

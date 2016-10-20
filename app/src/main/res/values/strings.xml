@@ -14,7 +14,7 @@
     <string name="about_fragment">About</string>
     <string name="become_donor_fragment">Become A Donor</string>
     <string name="news_feed_fragment">News and Events</string>
-    <string name="action_log_donation">Log Donation</string>
+    <string name="action_log_donation">Record A Donation</string>
 
     <string name="activity_donation_graph">Donation Graphs</string>
 

@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -126,8 +127,8 @@ public class DonationTrackingFragment extends Fragment {
      */
     public void showFAB()
     {
-        FloatingActionButton fab = (FloatingActionButton) this.getActivity().findViewById(R.id.fab);
-        fab.show();
+        Button fab = (Button) this.getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -135,8 +136,8 @@ public class DonationTrackingFragment extends Fragment {
      */
     public void hideFAB()
     {
-        FloatingActionButton fab = (FloatingActionButton) this.getActivity().findViewById(R.id.fab);
-        fab.hide();
+        Button fab = (Button) this.getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.INVISIBLE);
     }
 
     /**

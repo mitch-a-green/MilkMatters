@@ -115,8 +115,8 @@ public class BecomeDonorFragment extends Fragment {
      */
     public void showFAB()
     {
-        FloatingActionButton fab = (FloatingActionButton) this.getActivity().findViewById(R.id.fab);
-        fab.show();
+        Button fab = (Button) this.getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -124,8 +124,8 @@ public class BecomeDonorFragment extends Fragment {
      */
     public void hideFAB()
     {
-        FloatingActionButton fab = (FloatingActionButton) this.getActivity().findViewById(R.id.fab);
-        fab.hide();
+        Button fab = (Button) this.getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.INVISIBLE);
     }
 
     private void setQuestionView()

@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 
 import com.milkmatters.honoursproject.milkmatters.R;
@@ -124,8 +125,8 @@ public class EducationFragment extends Fragment {
      */
     public void showFAB()
     {
-        FloatingActionButton fab = (FloatingActionButton) this.getActivity().findViewById(R.id.fab);
-        fab.show();
+        Button fab = (Button) this.getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -133,7 +134,7 @@ public class EducationFragment extends Fragment {
      */
     public void hideFAB()
     {
-        FloatingActionButton fab = (FloatingActionButton) this.getActivity().findViewById(R.id.fab);
-        fab.hide();
+        Button fab = (Button) this.getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.INVISIBLE);
     }
 }

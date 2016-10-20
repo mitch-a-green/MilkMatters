@@ -161,17 +161,19 @@ public class DepotLocatorFragment extends Fragment implements
     /**
      * Method to show the floating action button
      */
-    public void showFAB() {
-        FloatingActionButton fab = (FloatingActionButton) this.getActivity().findViewById(R.id.fab);
-        fab.show();
+    public void showFAB()
+    {
+        Button fab = (Button) this.getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.VISIBLE);
     }
 
     /**
      * Method to hide the floating action button
      */
-    public void hideFAB() {
-        FloatingActionButton fab = (FloatingActionButton) this.getActivity().findViewById(R.id.fab);
-        fab.hide();
+    public void hideFAB()
+    {
+        Button fab = (Button) this.getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.INVISIBLE);
     }
 
     /**
