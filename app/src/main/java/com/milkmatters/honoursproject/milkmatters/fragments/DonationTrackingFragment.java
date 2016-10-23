@@ -95,6 +95,13 @@ public class DonationTrackingFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(this.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        // Display a message if no donations have been recorded
+        TextView message = (TextView) this.view.findViewById(R.id.message);
+        if (this.donations.size() == 0)
+            message.setVisibility(View.VISIBLE);
+        else
+            message.setVisibility(View.GONE);
+
         // specify an adapter
         mAdapter = new DonationsAdapter(this.donations);
         mRecyclerView.setAdapter(mAdapter);
@@ -168,6 +175,13 @@ public class DonationTrackingFragment extends Fragment {
 
         // Close the connection to the database
         this.donationsTableHelper.closeDB();
+
+        // Display a message if no donations have been recorded
+        TextView message = (TextView) this.view.findViewById(R.id.message);
+        if (this.donations.size() == 0)
+            message.setVisibility(View.VISIBLE);
+        else
+            message.setVisibility(View.GONE);
     }
 
     /**

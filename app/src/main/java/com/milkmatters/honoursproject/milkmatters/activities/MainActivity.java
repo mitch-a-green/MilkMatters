@@ -35,6 +35,7 @@ import com.milkmatters.honoursproject.milkmatters.dialogs.ShowMessageDialogFragm
 import com.milkmatters.honoursproject.milkmatters.fragments.AboutFragment;
 import com.milkmatters.honoursproject.milkmatters.fragments.BecomeDonorFragment;
 import com.milkmatters.honoursproject.milkmatters.fragments.DepotLocatorFragment;
+import com.milkmatters.honoursproject.milkmatters.fragments.DepotLocatorLoginFragment;
 import com.milkmatters.honoursproject.milkmatters.fragments.DonationTrackingFragment;
 import com.milkmatters.honoursproject.milkmatters.fragments.EducationFragment;
 import com.milkmatters.honoursproject.milkmatters.fragments.HomeFragment;
@@ -57,7 +58,8 @@ public class MainActivity extends AppCompatActivity
         LogDonationDialogFragment.NoticeDialogListener,
         ShowMessageDialogFragment.NoticeDialogListener,
         AboutFragment.OnFragmentInteractionListener,
-        BecomeDonorFragment.OnFormCompleteListener{
+        BecomeDonorFragment.OnFormCompleteListener,
+        DepotLocatorLoginFragment.OnLoginListener{
     private Fragment fragment;
     SharedPreferences prefs = null;
 
@@ -189,8 +191,16 @@ public class MainActivity extends AppCompatActivity
             fragment = new DonationTrackingFragment();
             title = getString(R.string.donation_tracking_fragment);
         } else if (id == R.id.nav_depot_locator) {
-            fragment = new DepotLocatorFragment();
-            title = getString(R.string.depot_locator_fragment);
+            // if the user has not authenticated herself before
+            if (prefs.getBoolean("authenticated", false) == false) {
+                prefs.edit().putBoolean("authenticated", true).commit();
+                fragment = new DepotLocatorLoginFragment();
+                title = getString(R.string.depot_locator_fragment);
+            }
+            else {
+                fragment = new DepotLocatorFragment();
+                title = getString(R.string.depot_locator_fragment);
+            }
         } else if (id == R.id.nav_education) {
             fragment = new EducationFragment();
             title = getString(R.string.education_fragment);
@@ -371,6 +381,14 @@ public class MainActivity extends AppCompatActivity
         fragment = null;
         fragment = ResultFragment.newInstance(score);
         String title = getString(R.string.become_donor_fragment);
+        this.switchFragment(title);
+    }
+
+    @Override
+    public void onLogin() {
+        fragment = null;
+        fragment = DepotLocatorFragment.newInstance();
+        String title = getString(R.string.depot_locator_fragment);
         this.switchFragment(title);
     }
 }

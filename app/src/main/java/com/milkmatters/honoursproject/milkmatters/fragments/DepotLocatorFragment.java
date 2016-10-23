@@ -19,6 +19,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -59,7 +61,7 @@ public class DepotLocatorFragment extends Fragment implements
     // Constants
     private final LatLng MILK_MATTERS = new LatLng(-33.949444, 18.475001);
     private final int DEFAULT_DURATION = 2000;
-    private final int DEFAULT_ZOOM = 13;
+    private final int DEFAULT_ZOOM = 12;
     // Data
     private ArrayList<Depot> depots;
     private ArrayList<Marker> markers;
@@ -69,6 +71,8 @@ public class DepotLocatorFragment extends Fragment implements
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
     // View
+    private ViewGroup container;
+    private LayoutInflater inflater;
     private View view;
 
     public DepotLocatorFragment() {
@@ -92,9 +96,8 @@ public class DepotLocatorFragment extends Fragment implements
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         this.view = inflater.inflate(R.layout.fragment_depot_locator, container, false);
 
         hideFAB();
