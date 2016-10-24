@@ -61,6 +61,9 @@ public class LogDonationDialogFragment extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         // Inflate the view and set the edit text values
         View view = inflater.inflate(R.layout.dialog_log_donation, null);
+        DatePicker datePicker = (DatePicker)
+                view.findViewById(R.id.datePicker);
+        datePicker.setDescendantFocusability(DatePicker.FOCUS_BLOCK_DESCENDANTS);
         final EditText quantityEditText = (EditText) view.findViewById(R.id.quantityEditText);
         // Set the dialog title
         builder.setTitle(title)

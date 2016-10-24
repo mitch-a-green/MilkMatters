@@ -1,8 +1,13 @@
 package com.milkmatters.honoursproject.milkmatters.fragments;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +51,9 @@ public class DepotLocatorLoginFragment extends Fragment implements View.OnClickL
         // Inflate the layout for this fragment
 
         this.view = inflater.inflate(R.layout.fragment_depot_locator_login, container, false);
+
+        //ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
         hideFAB();
         Button loginButton = (Button) this.view.findViewById(R.id.login);
         loginButton.setOnClickListener(this);
@@ -128,5 +136,28 @@ public class DepotLocatorLoginFragment extends Fragment implements View.OnClickL
      */
     public interface OnLoginListener {
         void onLogin();
+    }
+
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+
+                } else {
+                    Snackbar.make(this.view, "The depot locator will not behave properly without being " +
+                            "able to access your device's location", Snackbar.LENGTH_LONG).show();
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
     }
 }

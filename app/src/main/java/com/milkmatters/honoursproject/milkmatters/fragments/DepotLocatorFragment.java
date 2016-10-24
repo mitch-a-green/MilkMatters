@@ -2,7 +2,10 @@ package com.milkmatters.honoursproject.milkmatters.fragments;
 
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -14,6 +17,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,9 +29,16 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStates;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -58,6 +69,7 @@ public class DepotLocatorFragment extends Fragment implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
+    private Context context;
     // Constants
     private final LatLng MILK_MATTERS = new LatLng(-33.949444, 18.475001);
     private final int DEFAULT_DURATION = 2000;
@@ -93,6 +105,7 @@ public class DepotLocatorFragment extends Fragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.markers = new ArrayList<Marker>();
+        this.context = getContext();
     }
 
     @Override
@@ -111,23 +124,31 @@ public class DepotLocatorFragment extends Fragment implements
         findNearestDepotButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Marker nearestMarker = findNearestMarker();
-                if (nearestMarker != null)
-                {
-                    // Move the camera smoothly
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(nearestMarker.getPosition(), DEFAULT_ZOOM));
-                    // Change the color of the nearest marker to yellow
-                    // Change the color of all other markers to pink
-                    for (Marker marker: markers) {
-                        if (!marker.equals(nearestMarker))
-                            marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
-                    }
-                    nearestMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
-                }
+                findNearestDepot();
             }
         });
 
         return this.view;
+    }
+
+    /**
+     * Method to find the nearest depot and display it on the map.
+     */
+    public void findNearestDepot()
+    {
+        Marker nearestMarker = findNearestMarker();
+        if (nearestMarker != null)
+        {
+            // Move the camera smoothly
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(nearestMarker.getPosition(), DEFAULT_ZOOM));
+            // Change the color of the nearest marker to yellow
+            // Change the color of all other markers to pink
+            for (Marker marker: markers) {
+                if (!marker.equals(nearestMarker))
+                    marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+            }
+            nearestMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
+        }
     }
 
     /**
@@ -191,14 +212,14 @@ public class DepotLocatorFragment extends Fragment implements
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        addLocationLayer();
-        addDepots();
-        // moveCameraAndZoom(MILK_MATTERS, DEFAULT_ZOOM);
 
         // Use a custom map info window adapter (changes the layout of the info window.)
         MapInfoWindowAdapter mapInfoWindowAdapter =
                 new MapInfoWindowAdapter(this.getActivity().getLayoutInflater());
         mMap.setInfoWindowAdapter(mapInfoWindowAdapter);
+        addDepots();
+        addLocationLayer();
+        // moveCameraAndZoom(MILK_MATTERS, DEFAULT_ZOOM);
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -248,6 +269,10 @@ public class DepotLocatorFragment extends Fragment implements
                 mMap.setMyLocationEnabled(true);
                 mMap.getUiSettings().setMyLocationButtonEnabled(true);
             }
+            else
+            {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            }
         }
         else {
             buildGoogleApiClient();
@@ -272,7 +297,44 @@ public class DepotLocatorFragment extends Fragment implements
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(1000);
         mLocationRequest.setFastestInterval(1000);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+                .addLocationRequest(mLocationRequest);
+        builder.setAlwaysShow(true);
+
+        PendingResult<LocationSettingsResult> result =
+                LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, builder.build());
+        result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
+            @Override
+            public void onResult(LocationSettingsResult result) {
+                final Status status = result.getStatus();
+                Log.e("status", status.getStatusMessage());
+                final LocationSettingsStates state = result.getLocationSettingsStates();
+                switch (status.getStatusCode()) {
+                    case LocationSettingsStatusCodes.SUCCESS:
+                        // All location settings are satisfied. The client can initialize location
+                        // requests here.
+                        break;
+                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                        // Location settings are not satisfied. But could be fixed by showing the user
+                        // a dialog.
+                        try {
+                            // Show the dialog by calling startResolutionForResult(),
+                            // and check the result in onActivityResult().
+                            status.startResolutionForResult(
+                                    getActivity(), 1000);
+                        } catch (IntentSender.SendIntentException e) {
+                            // Ignore the error.
+                        }
+                        break;
+                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                        // Location settings are not satisfied. However, we have no way to fix the
+                        // settings so we won't show the dialog.
+                        break;
+                }
+            }
+        });
         if (ContextCompat.checkSelfPermission(this.getContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -301,68 +363,21 @@ public class DepotLocatorFragment extends Fragment implements
         }
     }
 
-    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    public boolean checkLocationPermission(){
-        if (ContextCompat.checkSelfPermission(this.getContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this.getActivity(),
-                    Manifest.permission.ACCESS_FINE_LOCATION)) {
-
-                // Show an expanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-
-                //Prompt the user once explanation has been shown
-                ActivityCompat.requestPermissions(this.getActivity(),
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_LOCATION);
-
-
-            } else {
-                // No explanation needed, we can request the permission.
-                ActivityCompat.requestPermissions(this.getActivity(),
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_LOCATION);
-            }
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_LOCATION: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
-                    if (ContextCompat.checkSelfPermission(this.getContext(),
-                            Manifest.permission.ACCESS_FINE_LOCATION)
-                            == PackageManager.PERMISSION_GRANTED) {
-
-                        if (mGoogleApiClient == null) {
-                            buildGoogleApiClient();
-                        }
-                        mMap.setMyLocationEnabled(true);
-                    }
-
-                } else {
-                    Snackbar.make(this.view, "The map will not behave properly without being " +
-                            "able to access your device's location", Snackbar.LENGTH_LONG).show();
-                }
-                return;
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == 1) {
+            if (permissions.length == 1 &&
+                    permissions[0].equals(Manifest.permission.ACCESS_FINE_LOCATION) &&
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                buildGoogleApiClient();
+                mMap.setMyLocationEnabled(true);
+                mMap.getUiSettings().setMyLocationButtonEnabled(true);
+            } else {
+                Snackbar.make(this.view, "The depot locator will not behave properly without being " +
+                        "able to access your device's location.", Snackbar.LENGTH_LONG).show();
+                Button button = (Button) this.view.findViewById(R.id.find_nearest_depot_button);
+                button.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorLightPink));
             }
-
-            // other 'case' lines to check for other
-            // permissions this app might request
         }
     }
 
@@ -377,5 +392,30 @@ public class DepotLocatorFragment extends Fragment implements
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
         // Zoom in, animating the camera.
         mMap.animateCamera(CameraUpdateFactory.zoomTo(zoom), DEFAULT_DURATION, null);
+    }
+
+    /**
+     * Overridden onActivityResult method.
+     * Should build the Google API client and add the location layer,
+     * once the user has either turned on or not turned on the device's location.
+     * Display a warning message if the user does not turn on the device's location.
+     * @param requestCode the request code
+     * @param resultCode the result code
+     * @param data the data
+     */
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (resultCode == Activity.RESULT_CANCELED) {
+            Snackbar.make(this.view, "The depot locator will not behave properly without being " +
+                    "able to access your device's location.", Snackbar.LENGTH_LONG).show();
+            Button button = (Button) this.view.findViewById(R.id.find_nearest_depot_button);
+            button.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorLightPink));
+        }
+        else if (resultCode == Activity.RESULT_OK)
+        {
+            buildGoogleApiClient();
+            mMap.setMyLocationEnabled(true);
+            mMap.getUiSettings().setMyLocationButtonEnabled(true);
+        }
     }
 }

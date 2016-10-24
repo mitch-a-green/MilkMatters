@@ -1,5 +1,6 @@
 package com.milkmatters.honoursproject.milkmatters.activities;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.net.Uri;
@@ -390,5 +391,16 @@ public class MainActivity extends AppCompatActivity
         fragment = DepotLocatorFragment.newInstance();
         String title = getString(R.string.depot_locator_fragment);
         this.switchFragment(title);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        DepotLocatorFragment fragment = (DepotLocatorFragment) getSupportFragmentManager().findFragmentByTag("Depot Locator");
+        if ((fragment != null) && (fragment.getClass().getName().toString().equals(DepotLocatorFragment.class.getName())))
+        {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }
