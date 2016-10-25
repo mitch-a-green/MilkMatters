@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,7 @@ public class ResultFragment extends Fragment{
         this.view = inflater.inflate(R.layout.fragment_become_donor_result, container, false);
 
         hideFAB();
-
+        
         //get rating bar object
         RatingBar bar=(RatingBar)this.view.findViewById(R.id.ratingBar1);
         bar.setNumStars(5);
@@ -122,8 +123,8 @@ public class ResultFragment extends Fragment{
      */
     public void showFAB()
     {
-        FloatingActionButton fab = (FloatingActionButton) this.getActivity().findViewById(R.id.fab);
-        fab.show();
+        Button fab = (Button) this.getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -131,8 +132,8 @@ public class ResultFragment extends Fragment{
      */
     public void hideFAB()
     {
-        FloatingActionButton fab = (FloatingActionButton) this.getActivity().findViewById(R.id.fab);
-        fab.hide();
+        Button fab = (Button) this.getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.INVISIBLE);
     }
 
     @Override

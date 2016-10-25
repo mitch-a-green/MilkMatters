@@ -379,6 +379,7 @@ public class MainActivity extends AppCompatActivity
      */
     @Override
     public void onFormComplete(int score) {
+
         fragment = null;
         fragment = ResultFragment.newInstance(score);
         String title = getString(R.string.become_donor_fragment);
@@ -397,6 +398,7 @@ public class MainActivity extends AppCompatActivity
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.e("here", "here");
         DepotLocatorFragment fragment = (DepotLocatorFragment) getSupportFragmentManager().findFragmentByTag("Depot Locator");
         if ((fragment != null) && (fragment.getClass().getName().toString().equals(DepotLocatorFragment.class.getName())))
         {
