@@ -61,7 +61,7 @@ public class ResultFragment extends Fragment{
         this.view = inflater.inflate(R.layout.fragment_become_donor_result, container, false);
 
         hideFAB();
-        
+
         //get rating bar object
         RatingBar bar=(RatingBar)this.view.findViewById(R.id.ratingBar1);
         bar.setNumStars(5);

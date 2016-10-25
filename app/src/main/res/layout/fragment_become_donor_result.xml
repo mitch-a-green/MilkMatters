@@ -29,7 +29,10 @@
             <RatingBar
                 android:id="@+id/ratingBar1"
                 android:progressBackgroundTint="@color/colorLightPink"
-                android:progressTint="@color/colorLightPink"
+                android:progressTint="@color/colorPrimary"
+                android:isIndicator="true"
+                android:focusable="false"
+                android:clickable="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:numStars="5"
