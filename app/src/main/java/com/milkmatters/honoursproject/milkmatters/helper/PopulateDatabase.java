@@ -59,6 +59,18 @@ public class PopulateDatabase {
         Location location9 = new Location("");
         location9.setLatitude(-33.9138399);
         location9.setLongitude(18.589034800000036);
+        Location location10 = new Location("");
+        location10.setLatitude(-34.08626739999999);
+        location10.setLongitude(18.45726190000005);
+        Location location11 = new Location("");
+        location11.setLatitude(-34.1241908);
+        location11.setLongitude(18.387825799999973);
+        Location location12 = new Location("");
+        location12.setLatitude(-34.4191774);
+        location12.setLongitude(19.242817899999977);
+        Location location13 = new Location("");
+        location13.setLatitude(-33.8155058);
+        location13.setLongitude(18.49359030000005);
         Depot depot1 = new Depot("Milk Matters Headquarters", "08:00 - 16:00 Mon - Fri",
                 "Jenny Wright", "021 555 7891", "", location1);
         Depot depot2 = new Depot("Somerset West",
@@ -85,6 +97,18 @@ public class PopulateDatabase {
         Depot depot9 = new Depot("Kids Medi Care",
                 "None listed", "Dr Rahmat Bagus (MBChB)",
                 "021 933 7004 / 082 826 4600", "18 Phillips Street, Parow Valley", location9);
+        Depot depot10 = new Depot("Lakeside Pharmacy",
+                "08:30 - 19:00 Mon, 08:30  - 15:30 Tue, Thu, & Fri, 08:30 - 13:00 Sat", "Julia Noble",
+                "021 788 6300", "62 Main Road, Lakeside", location10);
+        Depot depot11 = new Depot("Sun Valley Pharmacy",
+                "09:00 - 19:00 Mon to Fri, 09:00 - 17:00 Sat, 09:00 - 14:00 Sun", "Sr Bergit de Villiers",
+                "021 785 3470", "Shop G48, Longbeach Mall, Noordhoek", location11);
+        Depot depot12 = new Depot("Hermanus Pharmacy Clinic",
+                "09:00 - 15:00 Mon to Fri", "Sr Suzaan Di Giannatale",
+                "071 656 7090", "145 Main Road, Hermanus", location12);
+        Depot depot13 = new Depot("Blaauwberg Mother & Child Clinic",
+                "08:00 - 18:00 Mon to Fri, 08:00 - 16:00 Sat & Sun", "Dawn Collier & Mandy Richards",
+                "021 521 9000", "Cnr. Link Road and Park Drive, Parklands", location13);
         depotsTableHelper.createDepot(depot1);
         depotsTableHelper.createDepot(depot2);
         depotsTableHelper.createDepot(depot3);
@@ -94,6 +118,10 @@ public class PopulateDatabase {
         depotsTableHelper.createDepot(depot7);
         depotsTableHelper.createDepot(depot8);
         depotsTableHelper.createDepot(depot9);
+        depotsTableHelper.createDepot(depot10);
+        depotsTableHelper.createDepot(depot11);
+        depotsTableHelper.createDepot(depot12);
+        depotsTableHelper.createDepot(depot13);
         depotsTableHelper.closeDB();
     }
 
