@@ -98,7 +98,7 @@ public class BabiesGraphFragment extends Fragment {
         dataset.setCircleRadius(4f);
 
         LineData data = new LineData(labels, dataset);
-        dataset.setDrawCubic(true);
+        dataset.setDrawCubic(false);
         dataset.setDrawFilled(true);
 
         //lineChart.getAxisRight().setEnabled(false);

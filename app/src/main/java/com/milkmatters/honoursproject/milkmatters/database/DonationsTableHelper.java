@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -95,18 +96,18 @@ public class DonationsTableHelper extends DatabaseHelper
     }
 
     /**
-     * Get all donations that have been logged today
-     *
+     * Get all donations that have been logged on a given date
+     * @param date the date in question
      * @return a list of donations
      */
-    public ArrayList<Donation> getAllDonationsLoggedToday() {
+    public ArrayList<Donation> getAllDonationsLoggedOnDate(String date) {
         ArrayList<Donation> donations = new ArrayList<Donation>();
 
         String selectQuery = "SELECT * FROM " + TABLE_DONATIONS + " WHERE " +
                 KEY_DATE + " = ? ORDER BY date(" + KEY_DATE + ") DESC, " + KEY_ID + " DESC";
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery(selectQuery, new String[]{getDate()});
+        Cursor c = db.rawQuery(selectQuery, new String[]{date});
 
         // looping through all the rows and adding to the list
         if (c.moveToFirst()) {
@@ -221,40 +222,36 @@ public class DonationsTableHelper extends DatabaseHelper
     public ArrayList<ArrayList<Donation>> getDonationsGroupedByDate() {
         ArrayList<ArrayList<Donation>> allDonations =
                 new ArrayList<ArrayList<Donation>>();
-        String previousDate = "";
-        int counter = 0;
-
-        String selectQuery = "SELECT * FROM " + TABLE_DONATIONS + " ORDER BY date(" + KEY_DATE + ") DESC";
+        ArrayList<ArrayList<Donation>> allDonationsReversed =
+                new ArrayList<ArrayList<Donation>>();
+        String selectQuery = "SELECT " + KEY_DATE + " AS date, SUM(" +
+                KEY_QUANTITY + ") AS total FROM " + TABLE_DONATIONS + " GROUP BY " +
+                KEY_DATE + " ORDER BY date(" + KEY_DATE + ") DESC";
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
 
-        // loop through the results and generate the output list
+        // looping through all the rows and adding to the list
         if (c.moveToFirst()) {
             do {
-                String date = c.getString(c.getColumnIndex(KEY_DATE));
-                int quantity = c.getInt(c.getColumnIndex(KEY_QUANTITY));
-                Donation donation = new Donation(date, quantity);
-                Donation donationCopy = new Donation(date, quantity);
-                if ((previousDate.equals("")) || previousDate.equals(null)) {
-                    allDonations.add(new ArrayList<Donation>());
-                    allDonations.get(counter).add(donationCopy);
-                }
-                else if (date.equals(previousDate))
-                    allDonations.get(counter).get(0).increaseDonation(quantity);
-                else
-                {
-                    counter++;
-                    allDonations.add(new ArrayList<Donation>());
-                    allDonations.get(counter).add(donationCopy);
-                }
-                allDonations.get(counter).add(donation);
-                previousDate = date;
+                ArrayList<Donation> donations = new ArrayList<Donation>();
+                String dateAdded = c.getString(c.getColumnIndex(KEY_DATE));
+                int quantity = c.getInt(c.getColumnIndex("total"));
+                Donation donation = new Donation(dateAdded, -1, quantity);
 
+                // adding to the donations list
+                donations.add(donation);
+                donations.addAll(this.getAllDonationsLoggedOnDate(donation.getDate()));
+                allDonations.add(donations);
             } while (c.moveToNext());
         }
 
-        return allDonations;
+        for (int i = allDonations.size()-1; i >= 0; i--)
+        {
+            allDonationsReversed.add(allDonations.get(i));
+        }
+
+        return allDonationsReversed;
     }
 
     /**
