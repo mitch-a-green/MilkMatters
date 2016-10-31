@@ -72,7 +72,7 @@ public class PopulateDatabase {
         location13.setLatitude(-33.8155058);
         location13.setLongitude(18.49359030000005);
         Depot depot1 = new Depot("Milk Matters Headquarters", "08:00 - 16:00 Mon - Fri",
-                "Jenny Wright", "021 555 7891", "", location1);
+                "", "021 659 5599", "Room 37 Mowbray Maternity Hosp, Hornsey Road, Mowbray", location1);
         Depot depot2 = new Depot("Somerset West",
                 "Available any time", "Irene Bourquin",
                 "021 852 3040 / 082 897 0377", "22 Dromedaris Rd, Somerset West", location2);

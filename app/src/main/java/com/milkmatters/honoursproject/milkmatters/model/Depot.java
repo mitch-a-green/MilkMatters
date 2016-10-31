@@ -59,14 +59,12 @@ public class Depot {
     {
         String output = "";
 
-        if (!checkIfEmpty(this.hours))
-            output = output + "Business Hours: " + this.hours + "\n";
         if (!checkIfEmpty(this.contactName))
             output = output + "Milk Matters Contact: " + this.contactName + "\n";
         if (!checkIfEmpty(this.contactDetails))
             output = output + "Contact Number: " + this.contactDetails + "\n";
         if (!checkIfEmpty(this.extra))
-            output = output + " Other: " + this.extra + "\n";
+            output = output + "Address: " + this.extra + "\n";
 
         return output.trim();
     }
