@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -86,7 +87,7 @@ public class DonationsTableHelper extends DatabaseHelper
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_DATE, donation.getDate());
+        values.put(KEY_DATE, convertToCorrectDateFormat(donation.getSQLDate()));
         values.put(KEY_QUANTITY, donation.getQuantity());
 
         // insert row
@@ -107,7 +108,7 @@ public class DonationsTableHelper extends DatabaseHelper
                 KEY_DATE + " = ? ORDER BY date(" + KEY_DATE + ") DESC, " + KEY_ID + " DESC";
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery(selectQuery, new String[]{date});
+        Cursor c = db.rawQuery(selectQuery, new String[]{convertToCorrectDateFormat(date)});
 
         // looping through all the rows and adding to the list
         if (c.moveToFirst()) {
@@ -115,7 +116,7 @@ public class DonationsTableHelper extends DatabaseHelper
                 int id = c.getInt(c.getColumnIndex(KEY_ID));
                 String dateAdded = c.getString(c.getColumnIndex(KEY_DATE));
                 int quantity = c.getInt(c.getColumnIndex(KEY_QUANTITY));
-                Donation donation = new Donation(dateAdded, id, quantity);
+                Donation donation = new Donation(convertToCorrectDateFormat(dateAdded), id, quantity);
 
                 // adding to the donations list
                 donations.add(donation);
@@ -147,7 +148,7 @@ public class DonationsTableHelper extends DatabaseHelper
                 int id = c.getInt(c.getColumnIndex(KEY_ID));
                 String dateAdded = c.getString(c.getColumnIndex(KEY_DATE));
                 int quantity = c.getInt(c.getColumnIndex(KEY_QUANTITY));
-                Donation donation = new Donation(dateAdded, id, quantity);
+                Donation donation = new Donation(convertToCorrectDateFormat(dateAdded), id, quantity);
 
                 // adding to the donations list
                 donations.add(donation);
@@ -178,7 +179,7 @@ public class DonationsTableHelper extends DatabaseHelper
             do {
                 String dateAdded = c.getString(c.getColumnIndex(KEY_DATE));
                 int quantity = c.getInt(c.getColumnIndex("total"));
-                Donation donation = new Donation(dateAdded, -1, quantity);
+                Donation donation = new Donation(convertToCorrectDateFormat(dateAdded), -1, quantity);
 
                 // adding to the donations list
                 donations.add(donation);
@@ -222,36 +223,40 @@ public class DonationsTableHelper extends DatabaseHelper
     public ArrayList<ArrayList<Donation>> getDonationsGroupedByDate() {
         ArrayList<ArrayList<Donation>> allDonations =
                 new ArrayList<ArrayList<Donation>>();
-        ArrayList<ArrayList<Donation>> allDonationsReversed =
-                new ArrayList<ArrayList<Donation>>();
-        String selectQuery = "SELECT " + KEY_DATE + " AS date, SUM(" +
-                KEY_QUANTITY + ") AS total FROM " + TABLE_DONATIONS + " GROUP BY " +
-                KEY_DATE + " ORDER BY date(" + KEY_DATE + ") DESC";
+        String previousDate = "";
+        int counter = 0;
+
+        String selectQuery = "SELECT * FROM " + TABLE_DONATIONS + " ORDER BY date(" + KEY_DATE + ") DESC";
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
 
-        // looping through all the rows and adding to the list
+        // loop through the results and generate the output list
         if (c.moveToFirst()) {
             do {
-                ArrayList<Donation> donations = new ArrayList<Donation>();
-                String dateAdded = c.getString(c.getColumnIndex(KEY_DATE));
-                int quantity = c.getInt(c.getColumnIndex("total"));
-                Donation donation = new Donation(dateAdded, -1, quantity);
+                String date = convertToCorrectDateFormat(c.getString(c.getColumnIndex(KEY_DATE)));
+                int quantity = c.getInt(c.getColumnIndex(KEY_QUANTITY));
+                Donation donation = new Donation(date, quantity);
+                Donation donationCopy = new Donation(date, quantity);
+                if ((previousDate.equals("")) || previousDate.equals(null)) {
+                    allDonations.add(new ArrayList<Donation>());
+                    allDonations.get(counter).add(donationCopy);
+                }
+                else if (date.equals(previousDate))
+                    allDonations.get(counter).get(0).increaseDonation(quantity);
+                else
+                {
+                    counter++;
+                    allDonations.add(new ArrayList<Donation>());
+                    allDonations.get(counter).add(donationCopy);
+                }
+                allDonations.get(counter).add(donation);
+                previousDate = date;
 
-                // adding to the donations list
-                donations.add(donation);
-                donations.addAll(this.getAllDonationsLoggedOnDate(donation.getDate()));
-                allDonations.add(donations);
             } while (c.moveToNext());
         }
 
-        for (int i = allDonations.size()-1; i >= 0; i--)
-        {
-            allDonationsReversed.add(allDonations.get(i));
-        }
-
-        return allDonationsReversed;
+        return allDonations;
     }
 
     /**
@@ -283,5 +288,17 @@ public class DonationsTableHelper extends DatabaseHelper
         // delete the donation
         db.delete(TABLE_DONATIONS, KEY_ID + " = ?",
                 new String[]{String.valueOf(donation.getID())});
+    }
+
+
+    public String convertToCorrectDateFormat(String date)
+    {
+        String output = "";
+        String[] dateArray = date.split("-");
+
+        output = output + dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0];
+        Log.e("output", output);
+
+        return output;
     }
 }

@@ -1,5 +1,7 @@
 package com.milkmatters.honoursproject.milkmatters.model;
 
+import android.util.Log;
+
 /**
  * Class to model a breast milk donation
  * Created by mitchell on 2016/08/18.
@@ -52,6 +54,22 @@ public class Donation {
      */
     public String getDate() {
         return this.date;
+    }
+
+    /**
+     * Get the SQL compatible date
+     * @return the date
+     */
+    public String getSQLDate() {
+        String output = "";
+        String[] dateArray = date.split("-");
+
+        if (Integer.valueOf(dateArray[0]) < 10)
+            output = output + "0" + dateArray[0] + "-" + dateArray[1] + "-" + dateArray[2];
+        else
+            output = output + dateArray[0] + "-" + dateArray[1] + "-" + dateArray[2];
+
+        return output;
     }
 
     /**
