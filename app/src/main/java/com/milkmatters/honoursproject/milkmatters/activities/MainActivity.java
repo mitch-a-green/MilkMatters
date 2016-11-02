@@ -195,7 +195,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_depot_locator) {
             // if the user has not authenticated herself before
             if (prefs.getBoolean("authenticated", false) == false) {
-                prefs.edit().putBoolean("authenticated", true).commit();
                 fragment = new DepotLocatorLoginFragment();
                 title = getString(R.string.depot_locator_fragment);
             }
@@ -389,6 +388,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onLogin() {
+        prefs.edit().putBoolean("authenticated", true).commit();
         fragment = null;
         fragment = DepotLocatorFragment.newInstance();
         String title = getString(R.string.depot_locator_fragment);
