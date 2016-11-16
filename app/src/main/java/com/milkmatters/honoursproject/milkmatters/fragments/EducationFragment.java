@@ -103,6 +103,7 @@ public class EducationFragment extends Fragment {
                         intent.putExtra("title", "Parenting");
                         break;
                     case 8:
+                        //For suggesting an article or website to Milk Matters (via email)
                         Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
                         emailIntent.setData(Uri.parse("mailto:"));
                         emailIntent.putExtra(Intent.EXTRA_EMAIL, "chelseajoyful@gmail.com");

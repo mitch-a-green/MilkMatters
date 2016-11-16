@@ -61,13 +61,7 @@ public class MainArticlesActivity extends AppCompatActivity {
         listAdapter = new FeedListAdapter(this, feedItems);
         listView.setAdapter(listAdapter);
 
-        // These two lines not needed,
-        // just to get the look of facebook (changing background color & hiding the icon)
-        //getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3b5998")));
-        //getActionBar().setIcon(
-        //        new ColorDrawable(getResources().getColor(android.R.color.transparent)));
-
-        // We first check for cached request
+        // First checking for cached request
         Cache cache = AppController.getInstance().getRequestQueue().getCache();
         Entry entry = cache.get(URL_FEED);
         if (entry != null) {

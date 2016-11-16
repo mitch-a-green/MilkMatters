@@ -71,10 +71,12 @@ public class ResultFragment extends Fragment{
         //display score
         bar.setRating(score);
         if(score>4){
+            //Successful result
             t.setText("Congratulations, you are eligible to be a potential donor. \n\n" +
                     "Please get in contact with us if you are willing to make a difference.");
         }
         else {
+            //unsuccessful result
             t.setText("Unfortunately you may be ineligible to become a donor because you answered 'no' to a question. \n\n" +
                     "However, please still get in contact with us and consider donating equipment or money (which can be done through myschool/myvillage). \n\n"+
                         "Or tell us what you answered 'no' to, and maybe we can still accommodate you");

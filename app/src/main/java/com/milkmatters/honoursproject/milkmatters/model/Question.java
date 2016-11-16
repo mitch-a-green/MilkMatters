@@ -1,7 +1,7 @@
 package com.milkmatters.honoursproject.milkmatters.model;
 
 /**
- * Model for the donor table helper
+ * Model for the become donor table helper
  */
 public class Question {
     private int ID;

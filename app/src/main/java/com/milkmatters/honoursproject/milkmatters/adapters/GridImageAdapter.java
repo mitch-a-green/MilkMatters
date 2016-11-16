@@ -22,6 +22,8 @@ public class GridImageAdapter extends BaseAdapter
     {
         inflater = LayoutInflater.from(context);
 
+        //These are the images used in version 1 of the app
+        //Discarded now for consistency
         /*items.add(new Item("Breastfeeding", R.drawable.breastfeeding));
         items.add(new Item("Donation", R.drawable.donation));
         items.add(new Item("Increase Milk Supply", R.drawable.increase_milk_supply));
@@ -60,6 +62,7 @@ public class GridImageAdapter extends BaseAdapter
     }
 
     @Override
+    //Sets the grid view layout, with the educational category images and their name tags beneath
     public View getView(int i, View view, ViewGroup viewGroup)
     {
         View v = view;
