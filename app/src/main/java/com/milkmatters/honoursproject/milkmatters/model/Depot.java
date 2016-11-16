@@ -76,9 +76,7 @@ public class Depot {
      */
     private boolean checkIfEmpty(String toCheck)
     {
-        if (toCheck.equals("") || toCheck == null)
-            return true;
-        return false;
+        return toCheck.equals("") || toCheck == null;
     }
 
     // getters and setters

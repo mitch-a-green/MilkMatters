@@ -14,9 +14,9 @@ import com.android.volley.toolbox.ImageLoader.ImageListener;
 public class FeedImageView extends ImageView {
 
     public interface ResponseObserver {
-        public void onError();
+        void onError();
 
-        public void onSuccess();
+        void onSuccess();
     }
 
     private ResponseObserver mObserver;

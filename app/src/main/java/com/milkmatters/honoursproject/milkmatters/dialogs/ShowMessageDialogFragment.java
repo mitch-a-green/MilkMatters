@@ -15,7 +15,7 @@ public class ShowMessageDialogFragment extends DialogFragment {
      * implement this interface in order to receive event callbacks.
      * Each method passes the DialogFragment in case the host needs to query it. */
     public interface NoticeDialogListener {
-        public void onDialogClose(boolean logDonation);
+        void onDialogClose(boolean logDonation);
     }
 
     // Use this instance of the interface to deliver action events
