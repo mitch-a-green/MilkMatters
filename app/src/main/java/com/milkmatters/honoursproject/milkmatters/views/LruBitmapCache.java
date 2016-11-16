@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;
 import com.android.volley.toolbox.ImageLoader.ImageCache;
 
+//We referred to the tutorial at http://www.androidhive.info/2014/06/android-facebook-like-custom-listview-feed-using-volley/ for guidance
 public class LruBitmapCache extends LruCache<String, Bitmap> implements
         ImageCache {
     public static int getDefaultLruCacheSize() {
