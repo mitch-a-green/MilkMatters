@@ -290,7 +290,12 @@ public class DonationsTableHelper extends DatabaseHelper
                 new String[]{String.valueOf(donation.getID())});
     }
 
-
+    /**
+     * Reverses a date.
+     * i.e. from 'DD-MM-YYYY' to 'YYYY-MM-DD'
+     * @param date the date string to reverse
+     * @return the reversed date string
+     */
     public String convertToCorrectDateFormat(String date)
     {
         String output = "";

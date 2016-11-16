@@ -21,9 +21,7 @@ import com.milkmatters.honoursproject.milkmatters.model.Question;
 import java.util.ArrayList;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link BecomeDonorFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Fragment that provides users with a 'Become a Donor' quiz.
  */
 public class BecomeDonorFragment extends Fragment {
     private BecomeDonorFragment.OnFormCompleteListener mListener;
@@ -63,6 +61,11 @@ public class BecomeDonorFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Overridden onCreate method.
+     * Gets the questions from the database.
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +75,14 @@ public class BecomeDonorFragment extends Fragment {
         this.becomeDonorTableHelper.closeDB();
     }
 
+    /**
+     * Overridden onCreateView method.
+     * Sets up the view and questions.
+     * @param inflater the layout inflater
+     * @param container the container
+     * @param savedInstanceState the saved instance state
+     * @return the view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -128,6 +139,9 @@ public class BecomeDonorFragment extends Fragment {
         fab.setVisibility(View.INVISIBLE);
     }
 
+    /**
+     * Method to set the question view
+     */
     private void setQuestionView()
     {
         txtQuestion.setText(currentQ.getQUESTION());
@@ -137,6 +151,11 @@ public class BecomeDonorFragment extends Fragment {
         qid++;
     }
 
+    /**
+     * Interface call: used when the user has completed all the questions.
+     * Displays the result fragment.
+     * @param score the user's score
+     */
     public void onFormCompletePressed(int score) {
         if (mListener != null) {
             mListener.onFormComplete(score);
@@ -158,6 +177,10 @@ public class BecomeDonorFragment extends Fragment {
         }
     }
 
+    /**
+     * Callback interface.
+     * Used when the user has answered all the questions.
+     */
     public interface OnFormCompleteListener {
         void onFormComplete(int score);
     }

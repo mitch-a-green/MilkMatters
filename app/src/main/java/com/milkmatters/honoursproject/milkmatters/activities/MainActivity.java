@@ -386,6 +386,10 @@ public class MainActivity extends AppCompatActivity
         this.switchFragment(title);
     }
 
+    /**
+     * Callback method for the depot locator login fragment.
+     * Switches to the actual depot locator fragment.
+     */
     @Override
     public void onLogin() {
         prefs.edit().putBoolean("authenticated", true).commit();
@@ -395,11 +399,20 @@ public class MainActivity extends AppCompatActivity
         this.switchFragment(title);
     }
 
+    /**
+     * Overridden onActivityResult method.
+     * Calls the onActivityResult callback method in the depot locator fragment.
+     * Should build the Google API client and add the location layer,
+     * once the user has either turned on or not turned on the device's location.
+     * Display a warning message if the user does not turn on the device's location.
+     * @param requestCode the request code
+     * @param resultCode the result code
+     * @param data the data
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.e("here", "here");
         DepotLocatorFragment fragment = (DepotLocatorFragment) getSupportFragmentManager().findFragmentByTag("Depot Locator");
         if ((fragment != null) && (fragment.getClass().getName().toString().equals(DepotLocatorFragment.class.getName())))
         {

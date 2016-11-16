@@ -19,6 +19,9 @@ import com.milkmatters.honoursproject.milkmatters.model.FeedItem;
 
 import java.util.ArrayList;
 
+/**
+ * The donations adapter.
+ */
 public class DonationsAdapter extends RecyclerView.Adapter<DonationsAdapter.ViewHolder> {
     private ArrayList<ArrayList<Donation>> mDataset;
     private Context context;

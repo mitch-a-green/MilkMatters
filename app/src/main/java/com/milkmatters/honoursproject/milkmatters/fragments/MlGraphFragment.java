@@ -1,6 +1,5 @@
 package com.milkmatters.honoursproject.milkmatters.fragments;
 
-
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -23,9 +22,7 @@ import com.milkmatters.honoursproject.milkmatters.model.Donation;
 import java.util.ArrayList;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link MlGraphFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Fragment to display a graph of the quantity of milk donated (in ml).
  */
 public class MlGraphFragment extends Fragment {
     private Context context;

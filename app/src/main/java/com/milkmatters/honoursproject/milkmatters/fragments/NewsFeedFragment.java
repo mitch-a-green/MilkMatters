@@ -20,9 +20,7 @@ import com.milkmatters.honoursproject.milkmatters.model.FeedItem;
 import java.util.ArrayList;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link NewsFeedFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * The news and events feed fragment.
  */
 public class NewsFeedFragment extends Fragment {
     // Context
@@ -37,6 +35,9 @@ public class NewsFeedFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private View view;
 
+    /**
+     * Required empty public constructor
+     */
     public NewsFeedFragment() {
         // Required empty public constructor
     }
@@ -51,6 +52,11 @@ public class NewsFeedFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Overridden onCreate method.
+     * Gets the feed items from the database.
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +66,13 @@ public class NewsFeedFragment extends Fragment {
         this.feedTableHelper.closeDB();
     }
 
+    /**
+     * Overridden onCreateView method.
+     * @param inflater the layout inflater
+     * @param container the container
+     * @param savedInstanceState the saved instance state
+     * @return the view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -113,6 +126,7 @@ public class NewsFeedFragment extends Fragment {
 
     /**
      * Overridden onResume method
+     * Updates the feed data, in case it has changed.
      */
     @Override
     public void onResume()

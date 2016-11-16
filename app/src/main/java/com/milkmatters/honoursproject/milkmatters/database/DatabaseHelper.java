@@ -9,8 +9,6 @@ import java.util.Calendar;
 /**
  * Class to interface with the database
  * Contains all common database methods and attributes
- * Created by mitchell on 2016/08/18.
- * @author Mitchell Green
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
     // Database Version

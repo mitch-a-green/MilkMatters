@@ -40,9 +40,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * The home fragment.
+ * Provides users with a summary component from the donation tracking, news and events,
+ * and education sections.
  */
 public class HomeFragment extends Fragment {
     private Context context;
@@ -56,6 +56,9 @@ public class HomeFragment extends Fragment {
     // private String URL_FEED = "http://api.androidhive.info/feed/feed.json";
     private String URL_FEED = "http://www.json-generator.com/api/json/get/cpnlgqhszm?indent=2";
 
+    /**
+     * Required empty public constructor.
+     */
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -70,12 +73,24 @@ public class HomeFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Overridden onCreate method.
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.context = getContext();
     }
 
+    /**
+     * Overridden onCreateView method.
+     * Populates the screen with the various components.
+     * @param inflater the layout inflater
+     * @param container the container
+     * @param savedInstanceState the saved instance state
+     * @return the view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -127,7 +142,7 @@ public class HomeFragment extends Fragment {
 
     /**
      * Overridden onResume method.
-     * Refreshes the views, in case the donations data has changed.
+     * Refreshes the views, in case the data has changed.
      */
     public void onResume()
     {
@@ -163,12 +178,6 @@ public class HomeFragment extends Fragment {
 
         listAdapter = new FeedListAdapter(this.getActivity(), educationFeedItems);
         listView.setAdapter(listAdapter);
-
-        // These two lines not needed,
-        // just to get the look of facebook (changing background color & hiding the icon)
-        //getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3b5998")));
-        //getActionBar().setIcon(
-        //        new ColorDrawable(getResources().getColor(android.R.color.transparent)));
 
         // We first check for cached request
         Cache cache = AppController.getInstance().getRequestQueue().getCache();
@@ -217,23 +226,6 @@ public class HomeFragment extends Fragment {
     public void onPause()
     {
         super.onPause();
-    }
-
-    /**
-     * Method to set the size of each cell in the grid
-     */
-    public void setGridSize()
-    {
-        // get the screen size
-        Point size = new Point();
-        this.getActivity().getWindowManager().getDefaultDisplay().getSize(size);
-        int screenWidth = size.x;
-        int halfScreenWidth = (int)(screenWidth *0.5);
-        // set the size of each cell in the grid
-        GridLayout gridLayout = (GridLayout) this.view.findViewById(R.id.grid_layout);
-        gridLayout.setMinimumWidth(screenWidth);
-        gridLayout.getChildAt(0).setMinimumWidth(halfScreenWidth/2);
-        gridLayout.getChildAt(1).setMinimumWidth(halfScreenWidth/2);
     }
 
     /**

@@ -13,6 +13,9 @@ import com.milkmatters.honoursproject.milkmatters.model.FeedItem;
 
 import java.util.ArrayList;
 
+/**
+ * Adapter for the news and events feed.
+ */
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
     private ArrayList<FeedItem> mDataset;
 

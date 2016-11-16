@@ -87,6 +87,9 @@ public class DepotLocatorFragment extends Fragment implements
     private LayoutInflater inflater;
     private View view;
 
+    /**
+     * Required empty public constructor
+     */
     public DepotLocatorFragment() {
         // Required empty public constructor
     }
@@ -101,6 +104,10 @@ public class DepotLocatorFragment extends Fragment implements
         return fragment;
     }
 
+    /**
+     * Overridden onCreate method
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,6 +115,14 @@ public class DepotLocatorFragment extends Fragment implements
         this.context = getContext();
     }
 
+    /**
+     * Overridden onCreateView method.
+     * Sets up the Google Map
+     * @param inflater the layout inflater
+     * @param container the container
+     * @param savedInstanceState the saved instance state
+     * @return the view
+     */
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
@@ -222,6 +237,9 @@ public class DepotLocatorFragment extends Fragment implements
         // moveCameraAndZoom(MILK_MATTERS, DEFAULT_ZOOM);
     }
 
+    /**
+     * Synchronized method to build the Google API client
+     */
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this.getContext())
                 .addConnectionCallbacks(this)
@@ -282,6 +300,10 @@ public class DepotLocatorFragment extends Fragment implements
         }
     }
 
+    /**
+     * Overridden onPause method.
+     * Stops the location updates.
+     */
     @Override
     public void onPause() {
         super.onPause();
@@ -292,6 +314,13 @@ public class DepotLocatorFragment extends Fragment implements
         }
     }
 
+    /**
+     * Overridden onConnected method.
+     * Checks whether the app can access the device's location.
+     * Requests location updates if it can.
+     * Requests that the user updates the device's settings and app's permissions if it can't.
+     * @param bundle the bundle
+     */
     @Override
     public void onConnected(Bundle bundle) {
         mLocationRequest = new LocationRequest();
@@ -309,7 +338,6 @@ public class DepotLocatorFragment extends Fragment implements
             @Override
             public void onResult(LocationSettingsResult result) {
                 final Status status = result.getStatus();
-                Log.e("status", status.getStatusMessage());
                 final LocationSettingsStates state = result.getLocationSettingsStates();
                 switch (status.getStatusCode()) {
                     case LocationSettingsStatusCodes.SUCCESS:
@@ -348,6 +376,11 @@ public class DepotLocatorFragment extends Fragment implements
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {}
 
+    /**
+     * Overridden onLocationChanged method.
+     * Updates the map when the user's location has been changed.
+     * @param location the new location
+     */
     @Override
     public void onLocationChanged(Location location)
     {
@@ -363,6 +396,15 @@ public class DepotLocatorFragment extends Fragment implements
         }
     }
 
+    /**
+     * Callback method for the dialog which requests that the app be able to access
+     * the device's location.
+     * If the user grants the permission, set the user's location and update the map.
+     * If the user does not grant the permission, display an appropriate warning message.
+     * @param requestCode the request code
+     * @param permissions which permissions are being requested
+     * @param grantResults the resulsts of those requests
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == 1) {

@@ -32,9 +32,8 @@ import com.milkmatters.honoursproject.milkmatters.model.FeedItem;
 import java.util.ArrayList;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link DonationTrackingFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * The donation tracking fragment.
+ * Provides a summary data and a textual list of fragments.
  */
 public class DonationTrackingFragment extends Fragment {
     // Context
@@ -64,6 +63,11 @@ public class DonationTrackingFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Overridden onCreate method.
+     * Gets the donations from the database.
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +77,13 @@ public class DonationTrackingFragment extends Fragment {
         this.donationsTableHelper.closeDB();
     }
 
+    /**
+     * Overridden onCreateView method.
+     * @param inflater the layout inflater
+     * @param container the container
+     * @param savedInstanceState the saved instance state
+     * @return the view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -149,7 +160,7 @@ public class DonationTrackingFragment extends Fragment {
 
     /**
      * Overridden onResume method.
-     * Refreshes the views, in case the donations data has changed.
+     * Refreshes the views, in case the donation data has changed.
      */
     public void onResume()
     {
@@ -190,22 +201,5 @@ public class DonationTrackingFragment extends Fragment {
     public void onPause()
     {
         super.onPause();
-    }
-
-    /**
-     * Method to set the size of each cell in the grid
-     */
-    public void setGridSize()
-    {
-        // get the screen size
-        Point size = new Point();
-        this.getActivity().getWindowManager().getDefaultDisplay().getSize(size);
-        int screenWidth = size.x;
-        int halfScreenWidth = (int)(screenWidth *0.5);
-        // set the size of each cell in the grid
-        GridLayout gridLayout = (GridLayout) this.view.findViewById(R.id.grid_layout);
-        gridLayout.setMinimumWidth(screenWidth);
-        gridLayout.getChildAt(0).setMinimumWidth(halfScreenWidth/2);
-        gridLayout.getChildAt(1).setMinimumWidth(halfScreenWidth/2);
     }
 }

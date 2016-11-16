@@ -16,9 +16,8 @@ import android.widget.TextView;
 import com.milkmatters.honoursproject.milkmatters.R;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link AboutFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * 'About Milk Matters' fragment.
+ * Provides the user with information about Milk Matters, and contact details.
  */
 public class AboutFragment extends Fragment {
     private View view;

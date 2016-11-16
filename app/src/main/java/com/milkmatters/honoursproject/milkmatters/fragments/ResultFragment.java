@@ -17,12 +17,15 @@ import android.widget.TextView;
 
 import com.milkmatters.honoursproject.milkmatters.R;
 
-
+/**
+ * Fragment to display the result of the 'Become a Donor' quiz.
+ */
 public class ResultFragment extends Fragment{
     // Context
     private Context context;
     // Data
     private int score;
+    // View
     private View view;
 
     /**
@@ -45,6 +48,11 @@ public class ResultFragment extends Fragment{
         return fragment;
     }
 
+    /**
+     * Overridden onCreate method
+     * Accept the user's score as an argument.
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +62,13 @@ public class ResultFragment extends Fragment{
         }
     }
 
+    /**
+     * Overridden onCreateView method.
+     * @param inflater the layout inflater
+     * @param container the container
+     * @param savedInstanceState the saved instance state
+     * @return the view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -138,6 +153,9 @@ public class ResultFragment extends Fragment{
         fab.setVisibility(View.INVISIBLE);
     }
 
+    /**
+     * Overridden onDetach method
+     */
     @Override
     public void onDetach() {
         super.onDetach();

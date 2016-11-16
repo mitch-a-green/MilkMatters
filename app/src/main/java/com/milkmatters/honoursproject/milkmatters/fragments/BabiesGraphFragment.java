@@ -22,9 +22,7 @@ import com.milkmatters.honoursproject.milkmatters.model.Donation;
 import java.util.ArrayList;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link MlGraphFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Fragment to display a graph of the number of babies fed.
  */
 public class BabiesGraphFragment extends Fragment {
     private Context context;

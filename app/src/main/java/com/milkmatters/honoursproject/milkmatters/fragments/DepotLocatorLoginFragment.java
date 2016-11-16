@@ -21,11 +21,18 @@ import com.milkmatters.honoursproject.milkmatters.R;
 
 import java.util.ArrayList;
 
+/**
+ * The depot locator login fragment.
+ * Provides a login screen for mothers the first time they try use the depot locator.
+ */
 public class DepotLocatorLoginFragment extends Fragment implements View.OnClickListener{
     private final String PASSWORD = "supermom2016!";
     private View view;
     private DepotLocatorLoginFragment.OnLoginListener mListener;
 
+    /**
+     * Required empty public constructor
+     */
     public DepotLocatorLoginFragment() {
         // Required empty public constructor
     }
@@ -40,19 +47,28 @@ public class DepotLocatorLoginFragment extends Fragment implements View.OnClickL
         return fragment;
     }
 
+    /**
+     * Overridden onCreate method
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * Overridden onCreateView method.
+     * @param inflater the layout inflater
+     * @param container the container
+     * @param savedInstanceState the saved instance state
+     * @return the view
+     */
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
         this.view = inflater.inflate(R.layout.fragment_depot_locator_login, container, false);
-
-        //ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
         hideFAB();
         Button loginButton = (Button) this.view.findViewById(R.id.login);
@@ -136,28 +152,5 @@ public class DepotLocatorLoginFragment extends Fragment implements View.OnClickL
      */
     public interface OnLoginListener {
         void onLogin();
-    }
-
-    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_LOCATION: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-
-                } else {
-                    Snackbar.make(this.view, "The depot locator will not behave properly without being " +
-                            "able to access your device's location", Snackbar.LENGTH_LONG).show();
-                }
-                return;
-            }
-
-            // other 'case' lines to check for other
-            // permissions this app might request
-        }
     }
 }
