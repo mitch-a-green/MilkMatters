@@ -23,6 +23,9 @@ import com.milkmatters.honoursproject.milkmatters.adapters.GridImageAdapter;
  * Use the {@link EducationFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+
+//We referred to the tutorial at http://www.androidhive.info/2014/06/android-facebook-like-custom-listview-feed-using-volley/ for guidance
+//We used http://www.json-generator.com to store the online json pages for each education category
 public class EducationFragment extends Fragment {
     private Context context;
 
