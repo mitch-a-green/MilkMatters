@@ -64,7 +64,15 @@ public class Donation {
         String output = "";
         String[] dateArray = date.split("-");
 
-        if (Integer.valueOf(dateArray[0]) < 10)
+        if ((dateArray[0].length() == 1) && (dateArray[1].length() == 1))
+        {
+            output = output + "0" + dateArray[0] + "-0" + dateArray[1] + "-" + dateArray[2];
+        }
+        else if (dateArray[1].length() == 1)
+        {
+            output = output + dateArray[0] + "-0" + dateArray[1] + "-" + dateArray[2];
+        }
+        else if (dateArray[0].length() == 1)
             output = output + "0" + dateArray[0] + "-" + dateArray[1] + "-" + dateArray[2];
         else
             output = output + dateArray[0] + "-" + dateArray[1] + "-" + dateArray[2];
