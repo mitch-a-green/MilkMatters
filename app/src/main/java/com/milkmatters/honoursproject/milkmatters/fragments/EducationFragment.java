@@ -109,7 +109,8 @@ public class EducationFragment extends Fragment {
                         //For suggesting an article or website to Milk Matters (via email)
                         Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
                         emailIntent.setData(Uri.parse("mailto:"));
-                        emailIntent.putExtra(Intent.EXTRA_EMAIL, "chelseajoyful@gmail.com");
+                        String[] addresses = {"info@milkmatters.org"};
+                        emailIntent.putExtra(Intent.EXTRA_EMAIL, addresses);
                         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Article Suggestion");
                         emailIntent.putExtra(Intent.EXTRA_TEXT, "Here is an article I found very interesting...");
                         if (emailIntent.resolveActivity(getActivity().getPackageManager()) != null)
