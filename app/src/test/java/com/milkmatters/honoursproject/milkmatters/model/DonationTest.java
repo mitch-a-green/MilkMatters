@@ -21,6 +21,18 @@ public class DonationTest {
     }
 
     @Test
+    public void getDate() throws Exception {
+        donation.setDate(date);
+        assertEquals(date, donation.getDate());
+    }
+
+    @Test
+    public void getQuantity() throws Exception {
+        donation.setQuantity(quantity);
+        assertEquals(quantity, donation.getQuantity());
+    }
+
+    @Test
     public void getSQLDate() throws Exception {
         String[] dates = {"1-2-2016", "01-2-2016", "1-02-2016", "01-02-2016",
                 "01-11-2016", "1-11-2016", "11-1-2016", "11-11-2016"};

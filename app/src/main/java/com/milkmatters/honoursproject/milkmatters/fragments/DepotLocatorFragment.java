@@ -59,10 +59,9 @@ import java.util.ArrayList;
 import static android.content.Context.LOCATION_SERVICE;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link DepotLocatorFragment#newInstance} factory method to
- * create an instance of this fragment.
- * code from http://stackoverflow.com/questions/34582370/how-can-i-use-google-maps-and-locationmanager-to-show-current-location-on-androi/34582595#34582595
+ * The depot locator fragment
+ * Some code was sourced from
+ * http://stackoverflow.com/questions/34582370/how-can-i-use-google-maps-and-locationmanager-to-show-current-location-on-androi/34582595#34582595
  */
 public class DepotLocatorFragment extends Fragment implements
         OnMapReadyCallback,

@@ -19,7 +19,6 @@ import com.milkmatters.honoursproject.milkmatters.R;
  * Extends DialogFragment
  * Takes in a title and strings for the buttons
  * Has a callback method that returns the user's input
- * Created by mitchell on 2016/08/19.
  */
 public class LogDonationDialogFragment extends DialogFragment {
 
