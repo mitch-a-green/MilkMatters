@@ -75,7 +75,7 @@ public class AboutFragment extends Fragment {
         Button emailUsButton = (Button) this.view.findViewById(R.id.email_us);
         emailUsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String[] addresses = {"mitch.a.green@gmail.com", "chelseajoyful@gmail.com"};
+                String[] addresses = {"info@milkmatters.org"};
                 String message = "Hi,\n\nI read about you in the Milk Matters app. I am " +
                         "interested in finding out more...";
                 emailUs(addresses, "Want to Know More", message);

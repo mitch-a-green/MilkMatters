@@ -101,7 +101,7 @@ public class ResultFragment extends Fragment{
         Button emailUsButton = (Button) this.view.findViewById(R.id.email_us);
         emailUsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String[] addresses = {"mitch.a.green@gmail.com", "chelseajoyful@gmail.com"};
+                String[] addresses = {"info@milkmatters.org"};
                 if(score>4){
                     String message = "Hi,\n\nI took the become a donor quiz on the app. I am " +
                             "interested in becoming a donor...";
