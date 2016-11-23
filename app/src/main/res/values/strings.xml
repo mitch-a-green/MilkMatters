@@ -21,7 +21,7 @@
     <!-- About screen strings -->
     <string name="about_heading">Mission</string>
     <string name="about_contact_heading">Contact Us</string>
-    <string name="about_text">Milk Matters is a community-based, non-profit breast milk bank that pasteurises and distributes donations of screened breast milk from healthy donors to premature, ill and vulnerable babies whose own mothers cannot supply the breast milk to meet their baby’s needs. Milk Matters also facilitates the setting up of milk banks in health institutions.</string>
+    <string name="about_text">Milk Matters is a community-based, non-profit breast milk bank that pasteurises and distributes donations of screened breast milk from healthy donors to premature, ill and vulnerable babies whose own mothers cannot supply the breast milk to meet their baby’s needs.</string>
     <string name="about_link">  Want to become a donor? </string>
     <string name="telephone">Telephone</string>
     <string name="office_number">Office: 021 659 5599</string>

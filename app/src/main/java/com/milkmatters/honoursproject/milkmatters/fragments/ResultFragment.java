@@ -87,14 +87,19 @@ public class ResultFragment extends Fragment{
         bar.setRating(score);
         if(score>4){
             //Successful result
-            t.setText("Congratulations, you are eligible to be a potential donor. \n\n" +
-                    "Please get in contact with us if you are willing to make a difference.");
+            t.setText("Congratulations, you have passed Stage 1 of Donor Screening and " +
+                    "have the potential to become a Milk Matters Donor Mother.\n\n" +
+                    "If you are willing to offer the life-line of donated breastmilk, " +
+                    "please contact us to progress to Stage 2 of Donor Screening.");
         }
         else {
             //unsuccessful result
-            t.setText("Unfortunately you may be ineligible to become a donor because you answered 'no' to a question. \n\n" +
-                    "However, please still get in contact with us and consider donating equipment or money (which can be done through myschool/myvillage). \n\n"+
-                        "Or tell us what you answered 'no' to, and maybe we can still accommodate you");
+            t.setText("Obstacles to becoming a Milk Matters Donor Mother have been flagged which may " +
+                    "make you ineligible to become a donor, but please contact us so we can discuss " +
+                    "this with you and see if we can find a solution." +
+                    "\n\nIf donating breastmilk is not possible, please support us in some other " +
+                    "way: donate funds, equipment or support Milk Matters via the MySchool " +
+                    "MyVillage MyPlanet programme. Contact us for more details.");
         }
 
         // add functionality to send an automated email
@@ -103,16 +108,17 @@ public class ResultFragment extends Fragment{
             public void onClick(View v) {
                 String[] addresses = {"info@milkmatters.org"};
                 if(score>4){
-                    String message = "Hi,\n\nI took the become a donor quiz on the app. I am " +
+                    String message = "Hi,\n\nI took the \"Become a Donor\" quiz in the app. I am " +
                             "interested in becoming a donor...";
-                    emailUs(addresses, "Eligible donor", message);
+                    emailUs(addresses, "Potentially Eligible Donor", message);
                 }
                 else {
-                    String message = "Hi,\n\nI took the become a donor quiz on the app. " +
-                            "Unfortunately, I answered 'no' to a question (Insert question here) and may not be eligible to become a donor. " +
+                    String message = "Hi,\n\nI took the \"Become a Donor\" quiz in the app. " +
+                            "Unfortunately, I answered 'no' to a question " +
+                            "and might not be eligible to donate breastmilk. " +
                             "However, I am " +
-                            "interested in donating equipment/money and joining your mailing list...";
-                    emailUs(addresses, "Helping out", message);
+                            "interested in making a contribution and supporting Milk Matters...";
+                    emailUs(addresses, "Helping Out", message);
                 }
             }
         });

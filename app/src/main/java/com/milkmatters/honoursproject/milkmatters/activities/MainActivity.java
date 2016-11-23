@@ -297,9 +297,9 @@ public class MainActivity extends AppCompatActivity
     {
         DialogFragment newFragment = new LogDonationDialogFragment(); // Create the dialog fragment
         Bundle b = new Bundle();
-        b.putString("title", "Log Donation");
+        b.putString("title", "Record Donation");
         b.putString("hint", "Quantity (ml)");
-        b.putString("positiveButton", "Log Donation");
+        b.putString("positiveButton", "Record Donation");
         b.putString("negativeButton", "Cancel");
         newFragment.setArguments(b);
         newFragment.show(getSupportFragmentManager(), "confirmRename");
@@ -352,7 +352,7 @@ public class MainActivity extends AppCompatActivity
         // display a message
         CoordinatorLayout coordinatorLayout = (CoordinatorLayout)
                 findViewById(R.id.coordinator_layout);
-        Snackbar.make(coordinatorLayout, "Logged your donation.", Snackbar.LENGTH_LONG)
+        Snackbar.make(coordinatorLayout, "Your donation has been recorded.", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
 
         this.onResume();

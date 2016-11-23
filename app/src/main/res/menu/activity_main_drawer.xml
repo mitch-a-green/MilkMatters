@@ -16,7 +16,7 @@
             android:title="Education" />
         <item
             android:id="@+id/nav_news_feed"
-            android:title="News Feed" />
+            android:title="News and Events" />
         <item
             android:id="@+id/nav_about"
             android:title="About Milk Matters" />

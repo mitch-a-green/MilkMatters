@@ -131,10 +131,8 @@ public class PopulateDatabase {
     public void addFeedItems()
     {
         FeedTableHelper feedTableHelper = new FeedTableHelper(this.context);
-        NewsItem newsItem1 = new NewsItem("Milk Needed", "We need milk due to excessive demand.",
+        NewsItem newsItem1 = new NewsItem("Milk Needed", "We need milk due to high demand.",
                 "08-06-2016", "www.milkmatters.org");
-        NewsItem newsItem2 = new NewsItem("Baby Timmy Saved", "Baby Timmy was saved. He was born 5 weeks premature and could not tolerate formula. His mother was very happy and excited. Thank you to all the moms who helped contribute and gave him a second chance at life.",
-                "07-06-2016", "www.milkmatters.org");
         NewsItem newsItem3 = new NewsItem("Incredible Mom-And-Baby Photos Show The Beauty Of The ‘Breast Crawl’", "When Jessica, 32, sat down to make her birth plan before her daughter’s birth last May, she had one priority (in addition, of course, to everyone’s health and safety): The “breast crawl.”\n" +
                 "\n" +
                 "Newborns are hardwired to breastfeed, and the breast crawl is the practice of letting them use those instincts to slowly inch their way to their mother’s nipple to nurse for the very first time. Immediately after delivery, the baby is placed on the mother’s abdomen and given time to scoot up to her breasts, sniffing along the way. (BreastCrawl.org says says it generally takes between 30 and 60 minutes, after which babies who haven’t arrived at the breast yet may need a little help.) Proponents say that giving babies that first hour of life to make the journey helps promote early initiation of breastfeeding ― which has clear benefits ― and eases moms and babies through one of life’s biggest transitions. \n" +
@@ -211,20 +209,13 @@ public class PopulateDatabase {
                 "07-06-2016", "www.milkmatters.org", "14-09-2016", "10:00", "Rustenburg Square");
         EventItem eventItem2 = new EventItem("March for Milk", "We still have spaces left for this years March for Milk!!\nCome and enjoy a 2.5km or 5km walk / run for the whole family in aid of Milk Matters, the Breastmilk Bank.\nHelp raise funds and awareness and ensure more babies have access to life-saving donor milk.",
                 "02-03-2016", "https://www.facebook.com/events/696954203740860/?active_tab=highlights", "12-03-2016", "9:00", "Sea Point Beach Front");
-        EventItem eventItem3 = new EventItem("Milk Matters Open Day", "The Milk Matters team would like to invite you to an open day at the Milk Matters Head Quarters. We wish to demonstrate how crucial your breastmilk donations are to the lives of premature, vulnerable infants by giving you a tour of our Neonatal department and a get together over a cup of tea.\nBe sure to book your preferred day and time as we will be taking you round in small groups at half hour time slots between 10.30 and 12.30.\nWe hope you can make it & look forward to seeing you.\nRSVP: info@milkmatters.org\n021 659 5599 by the 1st July",
-                "10-07-2012", "https://www.facebook.com/events/207957505994410/", "23-07-2012", "10:30", "Mowbray Maternity Hospital Education Department");
-        EventItem eventItem4 = new EventItem("Milk Matters Open Day", "The Milk Matters team would like to invite you to an open day at the Milk Matters Head Quarters. We wish to demonstrate how crucial your breastmilk donations are to the lives of premature, vulnerable infants by giving you a tour of our Neonatal department and a get together over a cup of tea.\nBe sure to book your preferred day and time as we will be taking you round in small groups at half hour time slots between 10.30 and 12.30.\nWe hope you can make it & look forward to seeing you.\nRSVP: info@milkmatters.org\n021 659 5599 by the 1st July",
-                "10-07-2012", "https://www.facebook.com/events/207957505994410/", "25-07-2012", "10:30", "Mowbray Maternity Hospital Education Department");
         feedTableHelper.createNewsItem(newsItem1);
         feedTableHelper.createEventItem(eventItem1);
-        feedTableHelper.createNewsItem(newsItem2);
         feedTableHelper.createNewsItem(newsItem3);
         feedTableHelper.createNewsItem(newsItem4);
         feedTableHelper.createNewsItem(newsItem5);
         feedTableHelper.createNewsItem(newsItem6);
         feedTableHelper.createEventItem(eventItem2);
-        feedTableHelper.createEventItem(eventItem3);
-        feedTableHelper.createEventItem(eventItem4);
         feedTableHelper.closeDB();
     }
 
